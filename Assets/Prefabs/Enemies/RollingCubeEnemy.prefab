@@ -120,7 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0, z: 0}
-  _toppleForce: 5
+  _toppleForce: 2
+  next_step_after_s: 2
 --- !u!54 &8433496849489000064
 Rigidbody:
   m_ObjectHideFlags: 0

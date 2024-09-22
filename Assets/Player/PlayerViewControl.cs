@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerViewControl : MonoBehaviour
 {
-    private Transform player;
+    public Transform player;
     private float mouseSensitivity = 100f;
     public Vector2 _rotationLimits = new Vector2(-90f, 90f);
     private float _verticalRotation = 0f;
