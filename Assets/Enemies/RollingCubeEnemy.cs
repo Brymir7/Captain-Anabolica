@@ -3,9 +3,9 @@
 public class RollingCubeEnemy : Enemy
 {
     private Rigidbody _rb;
-    public float _toppleForce = 5f;
+    public float _toppleForce = 2.1f;
     private bool _isToppling = false;
-    public float next_step_after_s = 2f;
+    public float next_step_after_s = 0.7f;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -14,7 +14,7 @@ public class RollingCubeEnemy : Enemy
     {
         if (!_isToppling)
         {
-            Vector3 direction = Vector3.zero;
+            Vector3 direction = Vector3.zero;   
             float abs_x = Mathf.Abs(velocity.x);
             float abs_z = Mathf.Abs(velocity.z);
             float maxComponent = Mathf.Max(abs_x, abs_z);
@@ -32,9 +32,11 @@ public class RollingCubeEnemy : Enemy
             {
                 Topple(direction);
             }
-        }
+        } 
     }
-
+    public override void Attack()
+    {
+    }
     void Topple(Vector3 direction)
     {
         _isToppling = true;
@@ -46,8 +48,13 @@ public class RollingCubeEnemy : Enemy
     {
         _isToppling = false;
     }
-    
-    public override void Attack()
+    void OnTriggerEnter (Collider other)
     {
+        if (other.tag == "Bullet")
+        {
+            DefaultBullet bullet = other.GetComponent<DefaultBullet>();
+            Destroy(other.gameObject);
+            TakeDamage(bullet.damage);
+        }
     }
 }

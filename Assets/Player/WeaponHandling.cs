@@ -6,7 +6,7 @@ public class WeaponHandling : MonoBehaviour
     private bool isTransitioning;
     private bool isHolding;
 
-    private GameObject bulletPrefab;
+    public GameObject bulletPrefab;
 
     // Animation duration fields
     private float timeToTransition = 0.5f;
@@ -95,11 +95,21 @@ public class WeaponHandling : MonoBehaviour
     public float shootCooldown = 0.1f;
     private float lastShootTime;
 
-    public void ShootWeapon(Vector3 target)
+    public void ShootWeapon(Camera playerCamera)
     {
         if (isHolding && !isTransitioning && Time.time - lastShootTime >= shootCooldown)
         {
-
+            Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            var hit_sth = Physics.Raycast(ray, out RaycastHit hit);
+            Vector3 target;
+            if (!hit_sth)
+            {
+                target = ray.GetPoint(1000.0f); // If nothing is hit, shoot towards far point.
+            }
+            else
+            {
+                target = hit.point; 
+            }
             shoot((target-pistolTip).normalized);
             lastShootTime = Time.time;
         }

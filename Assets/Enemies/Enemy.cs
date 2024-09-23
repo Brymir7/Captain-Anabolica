@@ -10,7 +10,7 @@ public abstract class Enemy : MonoBehaviour
     public virtual void Initialize(EnemyType type)
     {
         enemyType = type;
-        health = 100f;
+        health = 1f;
         moveSpeed = 5f;
         velocity = Vector3.zero;
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -23,22 +23,18 @@ public abstract class Enemy : MonoBehaviour
         velocity = (player.position - transform.position).normalized * moveSpeed;
     }
     public abstract void Attack();
-
+    
     public virtual void TakeDamage(float damage)
     {
         health -= damage;
-        if (health <= 0)
-        {
-            Die();
-        }
     }
 
-    protected virtual void Die()
+    public bool IsDead()
     {
-        Destroy(gameObject);
+        return health <= 0f;
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         TargetPlayer();
         Move();

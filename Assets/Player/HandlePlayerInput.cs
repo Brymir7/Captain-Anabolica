@@ -10,12 +10,14 @@ public class HandlePlayerInput : MonoBehaviour
     private WalkingAnimation walkingAnimation;
     private WeaponHandling weapon_handler;
     private Camera playerCamera;
-    void Start()
+    private PlayerMovement _playerMovement;
+    void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _rb.freezeRotation = true; // Prevent tipping over
         walkingAnimation = GetComponent<WalkingAnimation>(); // Adjust if necessary
         weapon_handler = GetComponent<WeaponHandling>();
+        _playerMovement = GetComponent<PlayerMovement>();
         playerCamera = Camera.main;
     }
 
@@ -24,11 +26,7 @@ public class HandlePlayerInput : MonoBehaviour
 
     void Update()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-
-        Vector3 movement = (transform.right * moveHorizontal + transform.forward * moveVertical) * (moveSpeed * Time.deltaTime);
-    
+        _playerMovement.UpdateMoveDirection(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         if (Input.GetMouseButton(1)) // right mouse button
         {
             weapon_handler.HoldWeapon();
@@ -37,31 +35,9 @@ public class HandlePlayerInput : MonoBehaviour
         {
             weapon_handler.StopHoldingWeapon();
         }
-        if (Input.GetMouseButton(0)) // right mouse button
+        if (Input.GetMouseButton(0)) // left mouse button
         {
-            Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            var hit_sth = Physics.Raycast(ray, out RaycastHit hit);
-            Vector3 target;
-            if (!hit_sth)
-            {
-                target = ray.GetPoint(1000.0f); // If nothing is hit, shoot towards far point.
-            }
-            else
-            {
-                target = hit.point; // Set direction towards the hit point.
-            }
-            
-            weapon_handler.ShootWeapon(target);
+            weapon_handler.ShootWeapon(playerCamera);
         }
-
-        
-        // Movement
-         if (movement == Vector3.zero)
-         {
-             walkingAnimation.UpdateAnimationSpeed(0f);
-             return;
-         }
-        _rb.MovePosition(transform.position + movement);
-        walkingAnimation.UpdateAnimationSpeed(moveSpeed); 
     }
 }

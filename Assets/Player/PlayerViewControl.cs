@@ -22,11 +22,9 @@ public class PlayerViewControl : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // Horizontal rotation rotates the player
         _horizontalRotation += mouseX;
         player.Rotate(Vector3.up * mouseX); // Rotates the player horizontally
 
-        // Vertical rotation for the camera
         _verticalRotation -= mouseY;
         _verticalRotation = Mathf.Clamp(_verticalRotation, _rotationLimits.x, _rotationLimits.y);
 
@@ -40,17 +38,11 @@ public class PlayerViewControl : MonoBehaviour
         {
             verticalOffset = Mathf.Lerp(0f, -2f - offset.y, _verticalRotation / _rotationLimits.x);
         }
-
         float distanceModifier = Mathf.Lerp(1f, 0f, MathF.Abs( _verticalRotation) / _rotationLimits.y);
         Vector3 adjustedOffset = new Vector3(offset.x, verticalOffset + offset.y, offset.z * distanceModifier);
 
-
         transform.position = player.position + player.transform.rotation * adjustedOffset;
-
-
         transform.LookAt(player.position);
-
-
         transform.localRotation = Quaternion.Euler(_verticalRotation, 0f, 0f);
     }
 }

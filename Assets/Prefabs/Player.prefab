@@ -1615,6 +1615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8e117adc5b71540954a7fb7553662c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   _rotationLimits: {x: -90, y: 90}
 --- !u!1 &5203780257319717672
 GameObject:
@@ -2203,6 +2204,7 @@ GameObject:
   - component: {fileID: 2832881221505220725}
   - component: {fileID: 6854391393675309719}
   - component: {fileID: 3397167995819763186}
+  - component: {fileID: 927618895108895217}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -2315,7 +2317,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d96b2576da340546ba24c8c6a966c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 0}
   shootCooldown: 0.1
+--- !u!114 &927618895108895217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8800171079460119276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba30b181efa4a0b953ead16c7d14885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 15
 --- !u!1 &8890749849772852880
 GameObject:
   m_ObjectHideFlags: 0
