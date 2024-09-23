@@ -27,13 +27,24 @@ public abstract class Enemy : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
     }
+    public delegate void EnemyDeathEventHandler(Enemy enemy);
+    public event EnemyDeathEventHandler OnEnemyDeath;
+    private bool isDead = false;
 
-    public bool IsDead()
+    protected void Die()
     {
-        return health <= 0f;
+        if (!isDead)
+        {
+            isDead = true;
+            OnEnemyDeath?.Invoke(this); 
+        }
     }
-
+    
     public void FixedUpdate()
     {
         TargetPlayer();

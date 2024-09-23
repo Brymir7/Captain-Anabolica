@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.Assertions;
 using System.Linq;
 
+
 public class EnemyManager : MonoBehaviour
 {
     [System.Serializable]
@@ -20,8 +21,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private int maxEnemies = 50;
 
     private float nextSpawnTime;
-    public List<GameObject> activeEnemies = new List<GameObject>();
+    public List<Enemy> activeEnemies = new List<Enemy>();
     private List<Transform> enemyTransforms = new List<Transform>();
+    private List<GameObject> activeEnemyObjects = new List<GameObject>();
     
     public List<Transform> GetTransforms()
     {
@@ -35,17 +37,17 @@ public class EnemyManager : MonoBehaviour
             SpawnEnemy();
             nextSpawnTime = Time.time + spawnInterval;
         }
-        
-        for (int i = 0; i < activeEnemies.Count; i++)
+    }
+    
+    private void HandleEnemyDeath(Enemy enemy)
+    {
+        int index = activeEnemies.IndexOf(enemy);
+        if (index >= 0)
         {
-            Enemy enemy = activeEnemies[i].GetComponent<Enemy>();
-            Assert.IsTrue(enemy != null);
-            if (enemy.IsDead())
-            {
-                Destroy(activeEnemies[i]);
-                activeEnemies.RemoveAt(i);
-                enemyTransforms.RemoveAt(i);
-            }
+            Destroy(activeEnemyObjects[index]);  
+            activeEnemies.RemoveAt(index); 
+            enemyTransforms.RemoveAt(index);
+            activeEnemyObjects.RemoveAt(index);
         }
     }
     
@@ -58,31 +60,17 @@ public class EnemyManager : MonoBehaviour
         Enemy enemyComponent = enemyObject.GetComponent<Enemy>();
         Assert.IsTrue(enemyComponent != null);
         enemyComponent.Initialize(spawnInfo.enemyType);
-        activeEnemies.Add(enemyObject);
+        enemyComponent.OnEnemyDeath += HandleEnemyDeath;
+        activeEnemies.Add(enemyComponent);
         enemyTransforms.Add(enemyObject.transform);
+        activeEnemyObjects.Add(enemyObject);
     }
 
     private EnemySpawnInfo GetRandomEnemySpawnInfo()
     {
-        float totalWeight = 0f;
-        foreach (var info in enemySpawnInfos)
-        {
-            totalWeight += info.spawnWeight;
-        }
-
+        float totalWeight = enemySpawnInfos.Sum(info => info.spawnWeight);
         float randomValue = Random.Range(0f, totalWeight);
-        float currentWeight = 0f;
-
-        foreach (var info in enemySpawnInfos)
-        {
-            currentWeight += info.spawnWeight;
-            if (randomValue <= currentWeight)
-            {
-                return info;
-            }
-        }
-
-        return enemySpawnInfos[0];
+        return enemySpawnInfos.FirstOrDefault(info => (randomValue -= info.spawnWeight) < 0);
     }
 
     private Vector3 GetRandomSpawnPosition(EnemySpawnInfo spawnInfo)
