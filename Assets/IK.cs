@@ -51,7 +51,7 @@ public class IK : MonoBehaviour
                     {   
                         joints[i].position = joints[i+1].position + (joints[i].position - joints[i+1].position).normalized * bone_lengths[i];
                     }
-                    for (int i = AnchorJoint + 1; i < _endEffector - 1; i++)
+                    for (int i = AnchorJoint + 1; i <= _endEffector ; i++)
                     {   
                         joints[i].position = joints[i-1].position + (joints[i].position - joints[i-1].position).normalized * bone_lengths[i-1];
                     }
