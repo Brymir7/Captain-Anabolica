@@ -31,7 +31,7 @@ public class IK : MonoBehaviour
         {
             Debug.Log("Cannot reach target position with joint length" + bone_lengths.Sum());
             Debug.Log("Distance: " + dist_to_target);
-            for (int i = AnchorJoint + 1; i < _endEffector; i++)
+            for (int i = AnchorJoint + 1; i <= _endEffector; i++)
             {
                 Vector3 direction = (target.position - joints[AnchorJoint].position).normalized;
                 joints[i].position = joints[i - 1].position + direction * bone_lengths[i - 1];
