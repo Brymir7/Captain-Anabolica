@@ -1,0 +1,12 @@
+1. implement new player model with new animation for holding weapon and shooting at least for pistol???, maybe new pistol model in blender 
+2. maybe investigate blender animations more / bones again?, if yes investigate animator in unity3d
+3. new enemy with wings procedurally animated, 
+3.5 think about how the weapons should work and how they should interact with the enemies
+4. new weapon
+5. weapon swapping
+6. weapon dropping, xp system
+
+
+
+unity rigging 
+https://www.youtube.com/watch?v=Htl7ysv10Qs
