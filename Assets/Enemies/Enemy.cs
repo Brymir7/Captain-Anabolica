@@ -1,12 +1,14 @@
 ﻿using System;
 using UnityEngine;
+
 public abstract class Enemy : MonoBehaviour
 {
     protected EnemyType enemyType;
     protected float health;
     protected float moveSpeed;
     public Vector3 velocity;
-    private Transform player;
+    protected Transform player;
+
     public virtual void Initialize(EnemyType type)
     {
         enemyType = type;
@@ -23,12 +25,14 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void TargetPlayer()
     {
-        velocity = (player.position - transform.position).normalized * moveSpeed;
-        velocity.y = 0f;
+        velocity = transform.forward * moveSpeed;
     }
-    public abstract void LookAtPlayer(); 
+
+    public abstract void LookAtPlayer();
+
+
     public abstract void Attack();
-    
+
     public virtual void TakeDamage(float damage)
     {
         health -= damage;
@@ -37,7 +41,9 @@ public abstract class Enemy : MonoBehaviour
             Die();
         }
     }
+
     public delegate void EnemyDeathEventHandler(Enemy enemy);
+
     public event EnemyDeathEventHandler OnEnemyDeath;
     private bool isDead = false;
 
@@ -46,10 +52,10 @@ public abstract class Enemy : MonoBehaviour
         if (!isDead)
         {
             isDead = true;
-            OnEnemyDeath?.Invoke(this); 
+            OnEnemyDeath?.Invoke(this);
         }
     }
-    
+
     public void FixedUpdate()
     {
         TargetPlayer();

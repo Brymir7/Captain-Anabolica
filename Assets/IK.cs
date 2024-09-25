@@ -18,7 +18,7 @@ public class IK : MonoBehaviour
     private int _endEffector;
     private int maxIterations = 10;
     private const int AnchorJoint = 0;
-    public float totalBoneLength = 0;
+    [HideInInspector] public float totalBoneLength = 0;
     private List<float> bone_lengths = new List<float>();
 
     void Awake()

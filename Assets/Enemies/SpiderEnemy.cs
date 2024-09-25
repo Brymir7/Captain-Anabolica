@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpiderEnemy : Enemy
@@ -10,7 +8,9 @@ public class SpiderEnemy : Enemy
 
     public override void LookAtPlayer()
     {
-        transform.rotation = Quaternion.LookRotation(-velocity);
-        transform.rotation = new Quaternion(0.0f, transform.rotation.y, 0.0f, transform.rotation.w);
+        Vector3 direction = player.position - transform.position;
+        direction.y = 0;
+        transform.rotation = Quaternion.LookRotation(direction);
     }
+
 }

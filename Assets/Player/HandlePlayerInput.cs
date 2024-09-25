@@ -7,7 +7,6 @@ using UnityEngine;
 public class HandlePlayerInput : MonoBehaviour
 {
     private Rigidbody _rb = null;
-    private WalkingAnimation walkingAnimation;
     private WeaponHandling weapon_handler;
     private Camera playerCamera;
     private PlayerMovement _playerMovement;
@@ -15,7 +14,6 @@ public class HandlePlayerInput : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _rb.freezeRotation = true; // Prevent tipping over
-        walkingAnimation = GetComponent<WalkingAnimation>(); // Adjust if necessary
         weapon_handler = GetComponent<WeaponHandling>();
         _playerMovement = GetComponent<PlayerMovement>();
         playerCamera = Camera.main;

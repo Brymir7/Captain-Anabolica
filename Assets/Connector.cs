@@ -26,7 +26,7 @@ public class Connector : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.y = scaleY;
         scale.x = scaleX;
-        scale.z = Vector3.Distance(startJoint.position, endJoint.position);
+        scale.z = Vector3.Distance(startJoint.localPosition, endJoint.localPosition);
         transform.localScale = scale;
     }
 }

@@ -48,6 +48,10 @@ public class RollingCubeEnemy : Enemy
         _rb.AddForceAtPosition(direction * _toppleForce, transform.position + Vector3.up * 0.5f, ForceMode.Impulse);
         Invoke("ResetTopple", next_step_after_s);
     }
+    public override void TargetPlayer()
+    {
+        velocity = (player.transform.position - transform.position).normalized;
+    }
 
     void ResetTopple()
     {

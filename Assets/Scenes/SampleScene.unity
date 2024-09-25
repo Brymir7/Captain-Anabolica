@@ -326,11 +326,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579133580}
   m_CullTransparentMesh: 1
---- !u!4 &650629927 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2262892891029279230, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
-  m_PrefabInstance: {fileID: 7789053065188528977}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,12 +670,12 @@ MonoBehaviour:
   enemySpawnInfos:
   - enemyType: 0
     enemyPrefab: {fileID: 8775950794248828241, guid: d65e2061a244029448f371d5daae3b80, type: 3}
-    spawnWeight: 0
+    spawnWeight: 5
     minSpawnDistance: 0
     maxSpawnDistance: 10
   - enemyType: 1
     enemyPrefab: {fileID: 7322521181242813736, guid: 1bef93028ea879846b5d8ce9dbe0b3b8, type: 3}
-    spawnWeight: 2
+    spawnWeight: 0
     minSpawnDistance: 0
     maxSpawnDistance: 10
   spawnInterval: 2
@@ -1004,10 +999,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 927618895108895217, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
-      propertyPath: moveSpeed
-      value: 0.15
-      objectReference: {fileID: 0}
     - target: {fileID: 2262892891029279230, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -1048,25 +1039,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3397167995819763186, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
-      propertyPath: bulletPrefab
-      value: 
-      objectReference: {fileID: 329420646280659486, guid: 38d85b73c7c77eb4694104b2251696bf, type: 3}
-    - target: {fileID: 5078635378990148266, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 650629927}
-    - target: {fileID: 5203780257319717672, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 8800171079460119276, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8927926774511485149, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

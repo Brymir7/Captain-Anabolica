@@ -7,13 +7,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody _rb = null;
-    private WalkingAnimation walkingAnimation;
-
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _rb.freezeRotation = true; // Prevent tipping over
-        walkingAnimation = GetComponent<WalkingAnimation>(); // Adjust if necessary
     }
 
     public  float moveSpeed = 0.15f;
@@ -22,13 +19,6 @@ public class PlayerMovement : MonoBehaviour
     public void UpdateMoveDirection(float moveHorizontal, float moveVertical)
     {
         moveDirection = (transform.right * moveHorizontal + transform.forward * moveVertical);
-        if (moveDirection == Vector3.zero)
-        {
-            walkingAnimation.UpdateAnimationSpeed(0f);
-            return;
-        }
-
-        walkingAnimation.UpdateAnimationSpeed(moveSpeed);
     }
 
     public void FixedUpdate()
