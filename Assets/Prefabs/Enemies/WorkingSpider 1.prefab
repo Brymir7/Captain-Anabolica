@@ -118,15 +118,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5942375550358812279, guid: 5fb115ca6ba86564ea3cd36e709f7b4c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.872
+      value: -1.868
       objectReference: {fileID: 0}
     - target: {fileID: 5942375550358812279, guid: 5fb115ca6ba86564ea3cd36e709f7b4c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.131
+      value: 0.117
       objectReference: {fileID: 0}
     - target: {fileID: 5942375550358812279, guid: 5fb115ca6ba86564ea3cd36e709f7b4c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.143
+      value: 0.145
       objectReference: {fileID: 0}
     - target: {fileID: 6105647180798412281, guid: 5fb115ca6ba86564ea3cd36e709f7b4c, type: 3}
       propertyPath: m_Enabled
@@ -257,6 +257,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2496806025462709395, guid: 5fb115ca6ba86564ea3cd36e709f7b4c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8688221570327180974}
+    - targetCorrespondingSourceObject: {fileID: 2496806025462709395, guid: 5fb115ca6ba86564ea3cd36e709f7b4c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1539626110899302553}
     - targetCorrespondingSourceObject: {fileID: 7207263070532349574, guid: 5fb115ca6ba86564ea3cd36e709f7b4c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7246434176783997081}
@@ -366,6 +369,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.1892233, y: 1, z: 1.5422665}
   m_Center: {x: 0.0074448586, y: 0, z: -0.27113324}
+--- !u!114 &1539626110899302553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7322521181242813736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2b927e813aef94791ad0f7077693d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8800582770539133297 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4402636460225358026, guid: 5fb115ca6ba86564ea3cd36e709f7b4c, type: 3}

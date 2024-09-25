@@ -10,6 +10,11 @@ public class RollingCubeEnemy : Enemy
     {
         _rb = GetComponent<Rigidbody>();
     }
+
+    public override void LookAtPlayer()
+    {
+    }
+
     public override void Move()
     {
         if (!_isToppling)

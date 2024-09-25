@@ -11,17 +11,22 @@ public abstract class Enemy : MonoBehaviour
     {
         enemyType = type;
         health = 1f;
-        moveSpeed = 5f;
+        moveSpeed = 0.05f;
         velocity = Vector3.zero;
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    public abstract void Move();
+    public virtual void Move()
+    {
+        transform.position += velocity;
+    }
 
     public virtual void TargetPlayer()
     {
         velocity = (player.position - transform.position).normalized * moveSpeed;
+        velocity.y = 0f;
     }
+    public abstract void LookAtPlayer(); 
     public abstract void Attack();
     
     public virtual void TakeDamage(float damage)
@@ -48,6 +53,7 @@ public abstract class Enemy : MonoBehaviour
     public void FixedUpdate()
     {
         TargetPlayer();
+        LookAtPlayer();
         Move();
     }
 }
