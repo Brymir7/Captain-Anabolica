@@ -62,11 +62,15 @@ public class IK : MonoBehaviour
                 for (int i = _endEffector - 1; i > AnchorJoint; i--)
                 {
                     Vector3 norm_adjustment = (joints[i].joint.position - joints[i + 1].joint.position).normalized;
+                    
                     if (joints[i].constraint != Vector3.zero)
                     {
-                        norm_adjustment.x = Mathf.Sign(joints[i].constraint.x) * Mathf.Abs(norm_adjustment.x);
-                        norm_adjustment.y = Mathf.Sign(joints[i].constraint.y) * Mathf.Abs(norm_adjustment.y);
-                        norm_adjustment.z = Mathf.Sign(joints[i].constraint.z) * Mathf.Abs(norm_adjustment.z);
+                        Vector3 constraint = joints[i].constraint;
+                        if (Mathf.Abs(transform.rotation.eulerAngles.y) > 160f)
+                            constraint *= -1;
+                        norm_adjustment.x = Mathf.Sign(constraint.x) * Mathf.Abs(norm_adjustment.x);
+                        norm_adjustment.y = Mathf.Sign(constraint.y) * Mathf.Abs(norm_adjustment.y);
+                        norm_adjustment.z = Mathf.Sign(constraint.z) * Mathf.Abs(norm_adjustment.z);
                     }
                     joints[i].joint.position = joints[i + 1].joint.position +
                                                norm_adjustment *

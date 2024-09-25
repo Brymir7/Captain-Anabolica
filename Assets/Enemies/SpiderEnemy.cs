@@ -11,5 +11,6 @@ public class SpiderEnemy : Enemy
     public override void LookAtPlayer()
     {
         transform.rotation = Quaternion.LookRotation(-velocity);
+        transform.rotation = new Quaternion(0.0f, transform.rotation.y, 0.0f, transform.rotation.w);
     }
 }
