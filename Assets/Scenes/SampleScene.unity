@@ -670,12 +670,12 @@ MonoBehaviour:
   enemySpawnInfos:
   - enemyType: 0
     enemyPrefab: {fileID: 8775950794248828241, guid: d65e2061a244029448f371d5daae3b80, type: 3}
-    spawnWeight: 5
+    spawnWeight: 1
     minSpawnDistance: 0
     maxSpawnDistance: 10
   - enemyType: 1
     enemyPrefab: {fileID: 7322521181242813736, guid: 1bef93028ea879846b5d8ce9dbe0b3b8, type: 3}
-    spawnWeight: 0
+    spawnWeight: 1
     minSpawnDistance: 0
     maxSpawnDistance: 10
   spawnInterval: 2
