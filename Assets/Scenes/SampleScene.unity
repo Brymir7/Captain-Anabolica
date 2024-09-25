@@ -675,7 +675,7 @@ MonoBehaviour:
   enemySpawnInfos:
   - enemyType: 0
     enemyPrefab: {fileID: 8775950794248828241, guid: d65e2061a244029448f371d5daae3b80, type: 3}
-    spawnWeight: 2
+    spawnWeight: 0
     minSpawnDistance: 0
     maxSpawnDistance: 10
   - enemyType: 1
@@ -684,7 +684,7 @@ MonoBehaviour:
     minSpawnDistance: 0
     maxSpawnDistance: 10
   spawnInterval: 2
-  maxEnemies: 4
+  maxEnemies: 1
   activeEnemies: []
 --- !u!1 &1285734005
 GameObject:
