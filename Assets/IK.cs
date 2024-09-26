@@ -72,7 +72,7 @@ public class IK : MonoBehaviour
 
                 if (pole_exists)
                 {
-                    for (int i = 1; i < joints.Count - 1; i++)
+                    for (int i = 1; i < _endEffector; i++)
                     {
                         Vector3 currJointPos = joints[i].joint.position;
                         Vector3 nextJointPos = joints[i + 1].joint.position;
