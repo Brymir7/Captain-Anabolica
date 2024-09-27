@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0, z: 0}
-  amountOfSegments: 5
+  amountOfSegments: 24
   jointPrefab: {fileID: 7662906744246652632, guid: c9ed219cff5123e4581516df61ab3936, type: 3}
   connectorPrefab: {fileID: 7586978389177234526, guid: 7c617066e298b1842906b2f7fa23229b, type: 3}
   target: {fileID: 0}

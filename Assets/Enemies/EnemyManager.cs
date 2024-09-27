@@ -60,6 +60,17 @@ public class EnemyManager : MonoBehaviour
         Enemy enemyComponent = enemyObject.GetComponent<Enemy>();
         Assert.IsTrue(enemyComponent != null);
         enemyComponent.Initialize(spawnInfo.enemyType);
+        switch (spawnInfo.enemyType)
+        {
+          case EnemyType.Worm:
+              WormEnemy worm = enemyObject.GetComponent<WormEnemy>();
+              worm.amountOfSegments = Random.Range(5, 12);
+              break;
+          default:
+              break;
+        }
+  
+                
         enemyComponent.OnEnemyDeath += HandleEnemyDeath;
         activeEnemies.Add(enemyComponent);
         enemyTransforms.Add(enemyObject.transform);

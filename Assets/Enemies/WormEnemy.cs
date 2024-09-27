@@ -42,10 +42,6 @@ public class WormEnemy : Enemy
 
     void CreateWorm()
     {
-        if (ik.joints.Count > 0)
-        {
-            return;
-        }
 
         Vector3 startPosition = transform.position;
         for (int i = 0; i < amountOfSegments; i++)
