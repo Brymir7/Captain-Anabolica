@@ -17,6 +17,12 @@ public class IK : MonoBehaviour
     [HideInInspector] public float totalBoneLength = 0;
     private List<float> bone_lengths = new List<float>();
 
+    public void RemoveLastJoint()
+    {
+        joints.RemoveAt(joints.Count - 1);
+        _endEffector = joints.Count - 1;
+    }
+
     public void Awake()
     {
         if (joints.Count <= 0)

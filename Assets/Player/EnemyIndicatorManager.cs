@@ -80,7 +80,7 @@ public class EnemyIndicatorManager : MonoBehaviour
         }
         else
         {
-            arrowX = Mathf.Lerp(Screen.width / 2f, Screen.width - borderX , Mathf.InverseLerp(180, 45, angle));
+            arrowX = Mathf.Lerp(Screen.width / 2f, Screen.width - borderX, Mathf.InverseLerp(180, 45, angle));
             arrowY = Mathf.Lerp(300, Screen.height / 2f, Mathf.InverseLerp(90, 45, angle));
         }
 
@@ -97,7 +97,6 @@ public class EnemyIndicatorManager : MonoBehaviour
             {
                 Vector3 directionToEnemy = enemy.position - player.transform.position;
                 float angle = Vector3.SignedAngle(player.transform.forward, directionToEnemy, Vector3.up);
-                Debug.Log($"Non-visible enemy rotation: {angle} degrees");
             }
         }
     }

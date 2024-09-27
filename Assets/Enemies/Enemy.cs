@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     protected EnemyType enemyType;
-    protected float health;
+    protected int health;
     protected float moveSpeed;
     public Vector3 velocity;
     protected Transform player;
@@ -12,10 +12,20 @@ public abstract class Enemy : MonoBehaviour
     public virtual void Initialize(EnemyType type)
     {
         enemyType = type;
-        health = 1f;
+        health = 1;
         moveSpeed = 0.05f;
         velocity = Vector3.zero;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    public void SetHealth(int newHealth)
+    {
+        this.health = newHealth;
+    }
+
+    public void SetMoveSpeed(float newMoveSpeed)
+    {
+        moveSpeed = newMoveSpeed;
     }
 
     public virtual void Move()
@@ -33,7 +43,7 @@ public abstract class Enemy : MonoBehaviour
 
     public abstract void Attack();
 
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(int damage)
     {
         health -= damage;
         if (health <= 0)
@@ -61,5 +71,15 @@ public abstract class Enemy : MonoBehaviour
         TargetPlayer();
         LookAtPlayer();
         Move();
+    }
+
+    protected void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bullet")
+        {
+            DefaultBullet bullet = other.GetComponent<DefaultBullet>();
+            Destroy(other.gameObject);
+            TakeDamage(bullet.damage);
+        }
     }
 }

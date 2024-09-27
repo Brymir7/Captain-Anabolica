@@ -57,13 +57,5 @@ public class RollingCubeEnemy : Enemy
     {
         _isToppling = false;
     }
-    void OnTriggerEnter (Collider other)
-    {
-        if (other.tag == "Bullet")
-        {
-            DefaultBullet bullet = other.GetComponent<DefaultBullet>();
-            Destroy(other.gameObject);
-            TakeDamage(bullet.damage);
-        }
-    }
+
 }

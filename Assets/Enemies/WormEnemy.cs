@@ -42,7 +42,6 @@ public class WormEnemy : Enemy
 
     void CreateWorm()
     {
-
         Vector3 startPosition = transform.position;
         for (int i = 0; i < amountOfSegments; i++)
         {
@@ -60,7 +59,7 @@ public class WormEnemy : Enemy
                 connectorScript.endJoint = newJoint.transform;
                 connectorScript.UpdateConnector();
                 BoxCollider boxCollider = newConnector.AddComponent<BoxCollider>();
-                boxCollider.size = newConnector.transform.localScale;
+
                 connectors.Add(newConnector);
             }
 
@@ -76,5 +75,31 @@ public class WormEnemy : Enemy
 
         ik.target = target.transform;
         ik.Awake();
+    }
+
+    new void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bullet")
+        {
+            DefaultBullet bullet = other.GetComponent<DefaultBullet>();
+            var JointToRemove = joints[joints.Count - 1];
+            var ConnectorToRemove = connectors[connectors.Count - 1];
+            var dmg = bullet.damage;
+            Destroy(other.gameObject);
+            joints.Remove(JointToRemove);
+            connectors.Remove(ConnectorToRemove);
+            Destroy(JointToRemove);
+            Destroy(ConnectorToRemove);
+
+            amountOfSegments -= dmg;
+
+            if (amountOfSegments <= 1)
+            {
+                dmg += 1;
+            }
+
+            ik.RemoveLastJoint();
+            TakeDamage(dmg);
+        }
     }
 }

@@ -67,7 +67,6 @@ public class IKController : MonoBehaviour
 
             if (Vector3.Distance(targetPosition, pair.ikComponent.target.position) > maxDistanceOfLegTillSnapback)
             {
-                Debug.Log("Snapped leg");
                 pair.ikComponent.target.position = targetPosition;
             }
         }
