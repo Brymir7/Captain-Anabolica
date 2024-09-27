@@ -14,15 +14,15 @@ public class Connector : MonoBehaviour
         }
     }
 
-    private void UpdateConnector()
+    public void UpdateConnector()
     {
-        // Set position to the midpoint between the joints
+
         transform.position = (startJoint.position + endJoint.position) / 2;
 
-        // Make the connector look at the end joint
+
         transform.LookAt(endJoint);
 
-        // Adjust the scale of the connector based on the distance between joints
+      
         Vector3 scale = transform.localScale;
         scale.y = scaleY;
         scale.x = scaleX;

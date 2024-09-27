@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[System.Serializable]
-public class JointInfo
-{
-    public Transform joint;
-    public Vector3 constraint;
-}
-
 public class IK : MonoBehaviour
 {
-    public List<JointInfo> joints = new List<JointInfo>();
+    public List<Transform> joints = new List<Transform>();
     public Transform target;
     public Transform pole;
+    public bool keepAnchorPosition = true;
     private bool pole_exists = false;
     public float epsilon_for_target = 0.1f;
     private int _endEffector;
@@ -23,18 +17,17 @@ public class IK : MonoBehaviour
     [HideInInspector] public float totalBoneLength = 0;
     private List<float> bone_lengths = new List<float>();
 
-    void Awake()
+    public void Awake()
     {
         if (joints.Count <= 0)
         {
-            Debug.LogError("IK without joints");
-            return;
+            Debug.Log("IK without joints");
         }
 
         _endEffector = joints.Count - 1;
         for (int i = AnchorJoint; i < _endEffector; i++)
         {
-            bone_lengths.Add(Vector3.Distance(joints[i].joint.position, joints[i + 1].joint.position));
+            bone_lengths.Add(Vector3.Distance(joints[i].position, joints[i + 1].position));
         }
 
         if (pole != null) pole_exists = true;
@@ -43,61 +36,65 @@ public class IK : MonoBehaviour
 
     void FixedUpdate()
     {
-        float dist_to_target = Vector3.Distance(target.position, joints[AnchorJoint].joint.position);
-        if (dist_to_target > totalBoneLength)
+        float dist_to_target = Vector3.Distance(target.position, joints[AnchorJoint].position);
+        if (dist_to_target > totalBoneLength && keepAnchorPosition)
         {
             for (int i = AnchorJoint + 1; i <= _endEffector; i++)
             {
-                Vector3 direction = (target.position - joints[AnchorJoint].joint.position).normalized;
-                joints[i].joint.position = joints[i - 1].joint.position + direction * bone_lengths[i - 1];
+                Vector3 direction = (target.position - joints[AnchorJoint].position).normalized;
+                joints[i].position = joints[i - 1].position + direction * bone_lengths[i - 1];
             }
 
             return;
         }
         else
         {
-            float distance_last_joint_target = Vector3.Distance(joints[_endEffector].joint.position, target.position);
+            float distance_last_joint_target = Vector3.Distance(joints[_endEffector].position, target.position);
             int iterations = 0;
+            Vector3 original_anchor_position = joints[AnchorJoint].position;
             while (iterations < maxIterations && distance_last_joint_target > epsilon_for_target)
             {
                 iterations += 1;
-                joints[_endEffector].joint.position = target.position;
-                for (int i = _endEffector - 1; i > AnchorJoint; i--)
+                joints[_endEffector].position = target.position;
+                for (int i = _endEffector - 1; i >= AnchorJoint; i--)
                 {
-                    Vector3 norm_adjustment = (joints[i].joint.position - joints[i + 1].joint.position).normalized;
-                    joints[i].joint.position = joints[i + 1].joint.position +
-                                               norm_adjustment *
-                                               bone_lengths[i];
+                    Vector3 norm_adjustment = (joints[i].position - joints[i + 1].position).normalized;
+                    joints[i].position = joints[i + 1].position +
+                                         norm_adjustment *
+                                         bone_lengths[i];
                 }
 
                 if (pole_exists)
                 {
                     for (int i = 1; i < _endEffector; i++)
                     {
-                        Vector3 currJointPos = joints[i].joint.position;
-                        Vector3 nextJointPos = joints[i + 1].joint.position;
-                        Vector3 prevJointPos = joints[i - 1].joint.position;
+                        Vector3 currJointPos = joints[i].position;
+                        Vector3 nextJointPos = joints[i + 1].position;
+                        Vector3 prevJointPos = joints[i - 1].position;
                         var plane = new Plane(nextJointPos - prevJointPos,
                             prevJointPos);
                         var projectedPole = plane.ClosestPointOnPlane(pole.position);
-                        var projectedBone = plane.ClosestPointOnPlane(joints[i].joint.position);
+                        var projectedBone = plane.ClosestPointOnPlane(joints[i].position);
                         var angle = Vector3.SignedAngle(projectedBone - prevJointPos,
                             projectedPole - prevJointPos, plane.normal);
-                        joints[i].joint.position =
-                            Quaternion.AngleAxis(angle, plane.normal) * (joints[i].joint.position - prevJointPos) +
+                        joints[i].position =
+                            Quaternion.AngleAxis(angle, plane.normal) * (joints[i].position - prevJointPos) +
                             prevJointPos;
                     }
                 }
 
-
-                for (int i = AnchorJoint + 1; i <= _endEffector; i++)
+                if (keepAnchorPosition)
                 {
-                    joints[i].joint.position = joints[i - 1].joint.position +
-                                               (joints[i].joint.position - joints[i - 1].joint.position).normalized *
-                                               bone_lengths[i - 1];
+                    joints[AnchorJoint].position = original_anchor_position;
+                    for (int i = AnchorJoint + 1; i <= _endEffector; i++)
+                    {
+                        joints[i].position = joints[i - 1].position +
+                                             (joints[i].position - joints[i - 1].position).normalized *
+                                             bone_lengths[i - 1];
+                    }
                 }
 
-                distance_last_joint_target = Vector3.Distance(joints[_endEffector].joint.position, target.position);
+                distance_last_joint_target = Vector3.Distance(joints[_endEffector].position, target.position);
             }
         }
     }

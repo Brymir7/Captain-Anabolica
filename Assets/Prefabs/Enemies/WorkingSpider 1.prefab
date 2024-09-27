@@ -517,12 +517,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joints:
-  - joint: {fileID: 3064139006389267827}
-    constraint: {x: 0, y: 0, z: 0}
-  - joint: {fileID: 6104694190040043068}
-    constraint: {x: 1, y: 0, z: 0}
-  - joint: {fileID: 6535606223385104975}
-    constraint: {x: 0, y: 0, z: 0}
+  - {fileID: 3064139006389267827}
+  - {fileID: 6104694190040043068}
+  - {fileID: 6535606223385104975}
   target: {fileID: 0}
   pole: {fileID: 1892235151505472875}
   epsilon_for_target: 0.1
@@ -1459,12 +1456,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joints:
-  - joint: {fileID: 1595949587155334488}
-    constraint: {x: 0, y: 0, z: 0}
-  - joint: {fileID: 1737528284550882533}
-    constraint: {x: 1, y: 0, z: 0}
-  - joint: {fileID: 7509380805630180534}
-    constraint: {x: 0, y: 0, z: 0}
+  - {fileID: 1595949587155334488}
+  - {fileID: 1737528284550882533}
+  - {fileID: 7509380805630180534}
   target: {fileID: 0}
   pole: {fileID: 3020844347818274233}
   epsilon_for_target: 0.1
@@ -1786,12 +1780,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joints:
-  - joint: {fileID: 8148255271050528406}
-    constraint: {x: 0, y: 0, z: 0}
-  - joint: {fileID: 3221264708729060149}
-    constraint: {x: 1, y: 0, z: 0}
-  - joint: {fileID: 4085886493992611757}
-    constraint: {x: 0, y: 0, z: 0}
+  - {fileID: 8148255271050528406}
+  - {fileID: 3221264708729060149}
+  - {fileID: 4085886493992611757}
   target: {fileID: 0}
   pole: {fileID: 1801039366746771719}
   epsilon_for_target: 0.1
@@ -2794,12 +2785,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joints:
-  - joint: {fileID: 4244599467617695461}
-    constraint: {x: 0, y: 0, z: 0}
-  - joint: {fileID: 357582147844213286}
-    constraint: {x: 1, y: 0, z: 0}
-  - joint: {fileID: 5861192355701415718}
-    constraint: {x: 0, y: 0, z: 0}
+  - {fileID: 4244599467617695461}
+  - {fileID: 357582147844213286}
+  - {fileID: 5861192355701415718}
   target: {fileID: 0}
   pole: {fileID: 1957529352193847340}
   epsilon_for_target: 0.1
@@ -2855,12 +2843,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joints:
-  - joint: {fileID: 5720175345806377470}
-    constraint: {x: 0, y: 0, z: 0}
-  - joint: {fileID: 5508606209823508065}
-    constraint: {x: 1, y: 0, z: 0}
-  - joint: {fileID: 6476902492893580162}
-    constraint: {x: 0, y: 0, z: 0}
+  - {fileID: 5720175345806377470}
+  - {fileID: 5508606209823508065}
+  - {fileID: 6476902492893580162}
   target: {fileID: 0}
   pole: {fileID: 3845240560738230239}
   epsilon_for_target: 0.1

@@ -29,7 +29,7 @@ public class IKController : MonoBehaviour
                 {
                     Assert.IsTrue(pair.offsetFromBody.y == 0,
                         "LegIKPair.offsetFromBody.y == 0, as its gonna be raycast to the ground");
-                    Transform lastJoint = pair.ikComponent.joints[pair.ikComponent.joints.Count - 1].joint;
+                    Transform lastJoint = pair.ikComponent.joints[pair.ikComponent.joints.Count - 1];
                     GameObject targetClone = new GameObject($"{pair.leg.name}_Target");
                     targetClone.transform.position = lastJoint.position + pair.offsetFromBody;
                     pair.ikComponent.target = targetClone.transform;
@@ -51,7 +51,7 @@ public class IKController : MonoBehaviour
         foreach (var pair in legIKPairs)
         {
             var goalTargetXZ = transform.position + pair.offsetFromBody + Cmul(
-                (pair.ikComponent.joints[0].joint.transform.position - transform.position).normalized,
+                (pair.ikComponent.joints[0].position - transform.position).normalized,
                 transform.lossyScale);
             Ray ray = new Ray(goalTargetXZ, Vector3.down);
             RaycastHit hit;
