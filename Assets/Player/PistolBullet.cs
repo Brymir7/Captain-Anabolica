@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-class DefaultBullet : MonoBehaviour
+class PistolBullet : MonoBehaviour
 {
     public float speed = 100f;
     public int damage = 1;

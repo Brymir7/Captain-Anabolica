@@ -81,7 +81,7 @@ public class WormEnemy : Enemy
     {
         if (other.tag == "Bullet")
         {
-            DefaultBullet bullet = other.GetComponent<DefaultBullet>();
+            PistolBullet bullet = other.GetComponent<PistolBullet>();
             var JointToRemove = joints[joints.Count - 1];
             var ConnectorToRemove = connectors[connectors.Count - 1];
             var dmg = bullet.damage;

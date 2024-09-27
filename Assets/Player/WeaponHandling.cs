@@ -1,143 +1,74 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
+
+[System.Serializable]
+public enum WeaponType
+{
+    Pistol = 0,
+    GrenadeLauncher = 1
+}
+
+[System.Serializable]
+public class WeaponInfo
+{
+    public GameObject weaponPrefab;
+    public GameObject projectilePrefab;
+}
 
 public class WeaponHandling : MonoBehaviour
 {
     private bool isTransitioning;
     private bool isHolding;
-
-    public GameObject bulletPrefab;
-
-    // Animation duration fields
-    private float timeToTransition = 0.5f;
-
-    private Vector3 pistolTip;
-    // target pos
-    private Vector3 targetOffset = new(0.1f, -0.75f, 0.479f);
-
-    private Vector3 targetRotatedBy = new(-90f, 0f, 14f);
-
-    // Animation progress
-    private float animationProgress;
-
-    // Initial and target positions/rotations for Weapon
-    private Vector3 initialPosition;
-    private Quaternion initialRotation;
-    private Transform pistolArm;
-    private Transform pistol;
-    private Quaternion targetRotation;
-    private Vector3 targetWeaponPosition;
+    public List<WeaponInfo> weapons;
+    public Transform weaponPosition;
+    private Pistol pistol;
+    public WeaponType selectedWeapon = WeaponType.Pistol;
 
     private void Start()
     {
-        pistolArm = transform.Find("Shoulder/rightArm/pistolArm");
-        if (pistolArm == null)
-        {
-            Debug.LogError("pistolArm not found!");
-        }
-
-        pistol = transform.Find("Shoulder/rightArm/pistolArm/Pistol");
-        if (pistol == null)
-        {
-            Debug.LogError("pistol not found!");
-        }
-        else
-        {
-            pistolTip = pistol.position + pistol.forward * 0.3f;
-            initialPosition = pistolArm.localPosition;
-            initialRotation = pistolArm.localRotation;
-        }
+        var pistolAndBullet = weapons[(int)WeaponType.Pistol];
+        var pistolInstance = Instantiate(pistolAndBullet.weaponPrefab, weaponPosition);
+        pistol = pistolAndBullet.weaponPrefab.GetComponent<Pistol>();
+        Assert.IsTrue(pistol);
+        var pistolBullet = pistolAndBullet.projectilePrefab.GetComponent<PistolBullet>();
+        Assert.IsTrue(pistolBullet);
+        pistol.SetBulletPrefab(pistolAndBullet.projectilePrefab);
     }
 
-    private void Update()
-    {
-        pistolTip = pistol.position + pistol.forward * 0.3f; 
-        if (isTransitioning) // Play Animation
-        {
-            animationProgress += Time.deltaTime / timeToTransition;
-            animationProgress = Mathf.Clamp01(animationProgress);
 
-            pistolArm.localPosition = Vector3.Lerp(pistolArm.localPosition, targetWeaponPosition, animationProgress);
-            pistolArm.localRotation = Quaternion.Slerp(pistolArm.localRotation, targetRotation, animationProgress);
-            if (animationProgress >= 1f) {isTransitioning = false;}
-        }
-    }
-    public Vector3 GetWeaponPosition() 
-    {
-        return pistolTip;
-    }
     public void HoldWeapon()
     {
-        if (!isHolding && !isTransitioning)
+    }
+
+    public void SwitchWeapon()
+    {
+        selectedWeapon++;
+
+        if ((int)selectedWeapon >= System.Enum.GetValues(typeof(WeaponType)).Length)
         {
-            isTransitioning = true;
-            isHolding = true;
-            animationProgress = 0f;
-            targetWeaponPosition = initialPosition + targetOffset;
-            targetRotation =
-                initialRotation * Quaternion.Euler(targetRotatedBy.x, targetRotatedBy.y, targetRotatedBy.z);
+            selectedWeapon = WeaponType.Pistol;
         }
+    }
+
+
+    public void SwitchToWeapon(WeaponType wType)
+    {
+        selectedWeapon = wType;
     }
 
     public void StopHoldingWeapon()
     {
-        if (isHolding && !isTransitioning)
-        {
-            isTransitioning = true;
-            isHolding = false;
-            animationProgress = 0f;
-            targetWeaponPosition = initialPosition;
-            targetRotation = initialRotation;
-        }
     }
 
-
-    public float shootCooldown = 0.1f;
-    private float lastShootTime;
 
     public void ShootWeapon(Camera playerCamera)
     {
-        if (isHolding && !isTransitioning && Time.time - lastShootTime >= shootCooldown)
+        switch (selectedWeapon)
         {
-            Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            var hit_sth = Physics.Raycast(ray, out RaycastHit hit);
-            Vector3 target;
-            if (!hit_sth)
-            {
-                target = ray.GetPoint(1000.0f); // If nothing is hit, shoot towards far point.
-            }
-            else
-            {
-                target = hit.point; 
-            }
-            shoot((target-pistolTip).normalized);
-            lastShootTime = Time.time;
-        }
-    }
-    public void shoot(Vector3 direction)
-    {
-        if (!isHolding || isTransitioning)
-        {
-            Debug.LogWarning(
-                $"{gameObject.name}: Cannot shoot. Holding: {isHolding}, Transitioning: {isTransitioning}");
-            return;
-        }
-
-        if (bulletPrefab == null)
-        {
-            Debug.LogError("Bullet prefab is not set!");
-            return;
-        }
-        var bullet = Instantiate(bulletPrefab, pistolTip, Quaternion.identity);
-        var bulletComponent = bullet.GetComponent<DefaultBullet>();
-        if (bulletComponent != null)
-        {
-            bulletComponent.SetDirection(direction);
-        }
-        else
-        {
-            Debug.LogError("Bullet prefab does not have a Bullet component!");
-            Destroy(bullet); // Clean up the instantiated object if it doesn't have the required component
+            case WeaponType.Pistol:
+                pistol.ShootWeapon(playerCamera);
+                break;
         }
     }
 }
