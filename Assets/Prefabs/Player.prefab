@@ -1207,7 +1207,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d96b2576da340546ba24c8c6a966c20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapons: []
+  weapons:
+  - weaponPrefab: {fileID: 2842792535875324584, guid: a98c478808be8ec4285b7c02cd28d5ff, type: 3}
+    projectilePrefab: {fileID: 329420646280659486, guid: 38d85b73c7c77eb4694104b2251696bf, type: 3}
+  - weaponPrefab: {fileID: 919132149155446097, guid: c0d471de86764fa4bbde8155a28b127a, type: 3}
+    projectilePrefab: {fileID: 329420646280659486, guid: 38d85b73c7c77eb4694104b2251696bf, type: 3}
+  weaponPosition: {fileID: 5781983027398923007}
   selectedWeapon: 0
 --- !u!114 &927618895108895217
 MonoBehaviour:

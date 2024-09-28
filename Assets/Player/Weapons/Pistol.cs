@@ -7,7 +7,6 @@ public class Pistol : MonoBehaviour
     public float cooldown = 0.5f;
     private float lastShotTime = 0.0f;
     private GameObject bulletPrefab;
-    public Transform bulletSpawn;
 
     public void SetBulletPrefab(GameObject bPreFab)
     {
@@ -15,8 +14,9 @@ public class Pistol : MonoBehaviour
     }
 
     public void ShootWeapon(Camera playerCamera)
-    {   
-            print("shoooooooo");
+    {
+        if (Time.time - lastShotTime > cooldown)
+        {
             Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             var hit_sth = Physics.Raycast(ray, out RaycastHit hit);
             Vector3 target;
@@ -28,15 +28,14 @@ public class Pistol : MonoBehaviour
             {
                 target = hit.point;
             }
-
             shoot((target - transform.position).normalized);
             lastShotTime = Time.time;
-      
+        }
     }
 
     private void shoot(Vector3 direction)
     {
-        var bullet = Instantiate(bulletPrefab, bulletSpawn);
+        var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         var bulletComponent = bullet.GetComponent<PistolBullet>();
         bulletComponent.SetDirection(direction);
     }

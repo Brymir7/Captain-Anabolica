@@ -25,17 +25,15 @@ public class HandlePlayerInput : MonoBehaviour
     void Update()
     {
         _playerMovement.UpdateMoveDirection(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        if (Input.GetMouseButton(1)) // right mouse button
-        {
-            weapon_handler.HoldWeapon();
-        }
-        else
-        {
-            weapon_handler.StopHoldingWeapon();
-        }
+
         if (Input.GetMouseButton(0)) // left mouse button
         {
             weapon_handler.ShootWeapon(playerCamera);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            weapon_handler.SwitchWeapon();
         }
     }
 }
