@@ -26,7 +26,7 @@ public class WeaponHandling : MonoBehaviour
     public WeaponType selectedWeapon = WeaponType.Pistol;
 
 
-    private Dictionary<WeaponType, GameObject> weaponInstances = new Dictionary<WeaponType, GameObject>();
+    private Dictionary<WeaponType, GameObject>  weaponInstances = new Dictionary<WeaponType, GameObject>();
     public Transform placeholderPosition;
     private GameObject currentWeapon;
 

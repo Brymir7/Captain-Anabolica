@@ -7,10 +7,10 @@ public class PlayerViewControl : MonoBehaviour
 {
     public Transform player;
     private float mouseSensitivity = 100f;
-    public Vector2 _rotationLimits = new Vector2(-90f, 90f);
+    public Vector2 _rotationLimits = new Vector2(-90f, 60f);
     private float _verticalRotation = 0f;
     private float _horizontalRotation = 0f;
-    private Vector3 offset = new Vector3(2, 0f, -3f);
+    private Vector3 offset = new Vector3(2, 0f, -1.5f);
 
     void Start()
     {

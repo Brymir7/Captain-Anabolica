@@ -21,10 +21,11 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private int maxEnemies = 50;
 
     private float nextSpawnTime;
+    public float difficultyModifier = 1f;
     public List<Enemy> activeEnemies = new List<Enemy>();
     private List<Transform> enemyTransforms = new List<Transform>();
     private List<GameObject> activeEnemyObjects = new List<GameObject>();
-    
+
     public List<Transform> GetTransforms()
     {
         return enemyTransforms;
@@ -38,24 +39,24 @@ public class EnemyManager : MonoBehaviour
             nextSpawnTime = Time.time + spawnInterval;
         }
     }
-    
+
     private void HandleEnemyDeath(Enemy enemy)
     {
         int index = activeEnemies.IndexOf(enemy);
         if (index >= 0)
         {
-            Destroy(activeEnemyObjects[index]);  
-            activeEnemies.RemoveAt(index); 
+            Destroy(activeEnemyObjects[index]);
+            activeEnemies.RemoveAt(index);
             enemyTransforms.RemoveAt(index);
             activeEnemyObjects.RemoveAt(index);
         }
     }
-    
+
     private void SpawnEnemy()
     {
         EnemySpawnInfo spawnInfo = GetRandomEnemySpawnInfo();
         Vector3 spawnPosition = GetRandomSpawnPosition(spawnInfo);
-        
+
         GameObject enemyObject = Instantiate(spawnInfo.enemyPrefab, spawnPosition, Quaternion.identity);
         Enemy enemyComponent = enemyObject.GetComponent<Enemy>();
         Assert.IsTrue(enemyComponent != null);
@@ -67,10 +68,12 @@ public class EnemyManager : MonoBehaviour
                 var amountOfSegments = Random.Range(5, 12);
                 worm.amountOfSegments = amountOfSegments;
                 enemyComponent.SetHealth(amountOfSegments);
+                enemyComponent.transform.localScale = Vector3.one * (worm.amountOfSegments * difficultyModifier);
                 break;
             default:
                 break;
         }
+
         enemyComponent.OnEnemyDeath += HandleEnemyDeath;
         activeEnemies.Add(enemyComponent);
         enemyTransforms.Add(enemyObject.transform);
@@ -93,6 +96,4 @@ public class EnemyManager : MonoBehaviour
         spawnPosition.y = 3f;
         return spawnPosition;
     }
-
-
 }

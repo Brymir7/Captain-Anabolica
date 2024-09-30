@@ -48,8 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: {x: 0, y: 0, z: 0}
   amountOfSegments: 24
-  jointPrefab: {fileID: 7662906744246652632, guid: c9ed219cff5123e4581516df61ab3936, type: 3}
-  connectorPrefab: {fileID: 7586978389177234526, guid: 7c617066e298b1842906b2f7fa23229b, type: 3}
+  jointPrefab: {fileID: 7662906744246652632, guid: fe0637d229050b64c80fb0ea1b3f2bee, type: 3}
+  connectorPrefab: {fileID: 7586978389177234526, guid: 0c891e7f51aafd14ba79bfd5e29458e8, type: 3}
   target: {fileID: 0}
 --- !u!54 &8263145956352919437
 Rigidbody:
