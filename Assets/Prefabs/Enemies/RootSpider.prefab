@@ -54,7 +54,10 @@ MonoBehaviour:
   - {fileID: 7195710683186620368}
   - {fileID: 4040844741261370596}
   target: {fileID: 0}
+  pole: {fileID: 0}
+  keepAnchorPosition: 1
   epsilon_for_target: 0.1
+  totalBoneLength: 0
 --- !u!1 &280965469117829497
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,7 +1158,10 @@ MonoBehaviour:
   - {fileID: 6383166653506952539}
   - {fileID: 650613738507984068}
   target: {fileID: 0}
+  pole: {fileID: 0}
+  keepAnchorPosition: 1
   epsilon_for_target: 0.1
+  totalBoneLength: 0
 --- !u!1 &3296425911262077705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1874,7 +1880,10 @@ MonoBehaviour:
   - {fileID: 3548331435618230606}
   - {fileID: 1175637044586262348}
   target: {fileID: 0}
+  pole: {fileID: 0}
+  keepAnchorPosition: 1
   epsilon_for_target: 0.1
+  totalBoneLength: 0
 --- !u!1 &4593366554864223589
 GameObject:
   m_ObjectHideFlags: 0
@@ -2542,7 +2551,10 @@ MonoBehaviour:
   - {fileID: 1521614388789361373}
   - {fileID: 5303845682657110030}
   target: {fileID: 0}
+  pole: {fileID: 0}
+  keepAnchorPosition: 1
   epsilon_for_target: 0.1
+  totalBoneLength: 0
 --- !u!1 &5793317180414205360
 GameObject:
   m_ObjectHideFlags: 0
@@ -2903,7 +2915,6 @@ GameObject:
   - component: {fileID: 8614300569343275470}
   - component: {fileID: 7762728212174353657}
   - component: {fileID: 3508705872590934655}
-  - component: {fileID: 619824678615436116}
   m_Layer: 0
   m_Name: MainBody
   m_TagString: Untagged
@@ -2976,27 +2987,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &619824678615436116
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6323494592708382896}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6400337211592086323
 GameObject:
   m_ObjectHideFlags: 0
@@ -3051,7 +3041,10 @@ MonoBehaviour:
   - {fileID: 366381372354364397}
   - {fileID: 4191484710548739286}
   target: {fileID: 0}
+  pole: {fileID: 0}
+  keepAnchorPosition: 1
   epsilon_for_target: 0.1
+  totalBoneLength: 0
 --- !u!1 &6473043286406149885
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,7 +3309,10 @@ MonoBehaviour:
   - {fileID: 1578122442603771807}
   - {fileID: 5464055000284125266}
   target: {fileID: 0}
+  pole: {fileID: 0}
+  keepAnchorPosition: 1
   epsilon_for_target: 0.1
+  totalBoneLength: 0
 --- !u!1 &6868489321841429152
 GameObject:
   m_ObjectHideFlags: 0
@@ -3660,7 +3656,6 @@ GameObject:
   - component: {fileID: 7595259061740769267}
   - component: {fileID: 6798038139437110777}
   - component: {fileID: 4700447428840822859}
-  - component: {fileID: 3790689400534350746}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -3736,27 +3731,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3790689400534350746
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7207263070532349574}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8366652799854787422
 GameObject:
   m_ObjectHideFlags: 0

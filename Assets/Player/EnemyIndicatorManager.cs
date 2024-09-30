@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 public class EnemyIndicatorManager : MonoBehaviour
 {
@@ -46,23 +47,23 @@ public class EnemyIndicatorManager : MonoBehaviour
 
     private void UpdateArrows(List<int> notVisibleEnemies)
     {
+        Assert.IsTrue(notVisibleEnemies.Count <= enemyTransforms.Count);
         while (arrows.Count < notVisibleEnemies.Count)
         {
             GameObject newArrow = Instantiate(arrowPrefab, transform);
             arrows.Add(newArrow);
         }
 
+        notVisibleEnemies.ForEach(delegate(int visibleEnemy)
+        {
+            UpdateArrowTransform(arrows[visibleEnemy], enemyTransforms[visibleEnemy]);
+        });
         while (arrows.Count > notVisibleEnemies.Count)
         {
             GameObject arrowToRemove = arrows[arrows.Count - 1];
             arrows.RemoveAt(arrows.Count - 1);
             Destroy(arrowToRemove);
         }
-
-        notVisibleEnemies.ForEach(delegate(int visibleEnemy)
-        {
-            UpdateArrowTransform(arrows[visibleEnemy], enemyTransforms[visibleEnemy]);
-        });
     }
 
     private void UpdateArrowTransform(GameObject arrow, Transform enemyTransform)

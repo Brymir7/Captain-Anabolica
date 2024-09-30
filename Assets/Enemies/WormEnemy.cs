@@ -68,7 +68,7 @@ public class WormEnemy : Enemy
 
         if (target == null)
         {
-            target = new GameObject("WormTarget", typeof(Transform));
+            target = new GameObject("WormTarget");
             target.transform.parent = transform;
             target.transform.position = joints[joints.Count - 1].transform.position;
         }
@@ -81,10 +81,10 @@ public class WormEnemy : Enemy
     {
         if (other.tag == "Bullet")
         {
-            PistolBullet bullet = other.GetComponent<PistolBullet>();
+            ProjectileBase bullet = other.GetComponent<ProjectileBase>();
             var JointToRemove = joints[joints.Count - 1];
             var ConnectorToRemove = connectors[connectors.Count - 1];
-            var dmg = bullet.damage;
+            var dmg = bullet.GetDamage();
             Destroy(other.gameObject);
             joints.Remove(JointToRemove);
             connectors.Remove(ConnectorToRemove);

@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 329420646280659486}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0058145723, y: 0.4999662, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -226,6 +226,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 100
   damage: 1
+  lifetime: 0
+  maxDistance: 100
 --- !u!54 &6722495101987174936
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -252,4 +254,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3

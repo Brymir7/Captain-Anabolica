@@ -78,8 +78,8 @@ public abstract class Enemy : MonoBehaviour
         if (other.tag == "Bullet")
         {
             PistolBullet bullet = other.GetComponent<PistolBullet>();
+            TakeDamage(bullet.GetDamage());
             Destroy(other.gameObject);
-            TakeDamage(bullet.damage);
         }
     }
 }

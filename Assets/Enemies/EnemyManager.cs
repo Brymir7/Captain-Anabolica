@@ -73,7 +73,7 @@ public class EnemyManager : MonoBehaviour
             default:
                 break;
         }
-
+        enemyComponent.transform.parent = transform;
         enemyComponent.OnEnemyDeath += HandleEnemyDeath;
         activeEnemies.Add(enemyComponent);
         enemyTransforms.Add(enemyObject.transform);
