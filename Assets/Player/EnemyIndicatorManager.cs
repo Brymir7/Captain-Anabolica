@@ -58,6 +58,7 @@ public class EnemyIndicatorManager : MonoBehaviour
         {
             UpdateArrowTransform(arrows[visibleEnemy], enemyTransforms[visibleEnemy]);
         });
+        
         while (arrows.Count > notVisibleEnemies.Count)
         {
             GameObject arrowToRemove = arrows[arrows.Count - 1];

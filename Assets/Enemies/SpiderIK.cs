@@ -13,7 +13,7 @@ public class LegIKPair
     [HideInInspector] public IK ikComponent; // Store the IK component
 }
 
-public class IKController : MonoBehaviour
+public class SpiderIK : MonoBehaviour
 {
     public float maxDistanceOfLegTillSnapback = 0.2f;
     [SerializeField] private List<LegIKPair> legIKPairs;
@@ -32,7 +32,7 @@ public class IKController : MonoBehaviour
                     Transform lastJoint = pair.ikComponent.joints[pair.ikComponent.joints.Count - 1];
                     GameObject targetClone = new GameObject($"{pair.leg.name}_Target");
                     targetClone.transform.position = lastJoint.position + pair.offsetFromBody;
-                    pair.ikComponent.target = targetClone.transform;
+                    pair.ikComponent.target = targetClone.transform.position;
                 }
                 else
                 {
@@ -65,9 +65,9 @@ public class IKController : MonoBehaviour
                 targetPosition = ray.GetPoint(pair.ikComponent.totalBoneLength);
             }
 
-            if (Vector3.Distance(targetPosition, pair.ikComponent.target.position) > maxDistanceOfLegTillSnapback)
+            if (Vector3.Distance(targetPosition, pair.ikComponent.target) > maxDistanceOfLegTillSnapback)
             {
-                pair.ikComponent.target.position = targetPosition;
+                pair.ikComponent.target = targetPosition;
             }
         }
     }

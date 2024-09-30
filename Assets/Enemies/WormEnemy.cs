@@ -20,7 +20,7 @@ public class WormEnemy : Enemy
 
     public override void TargetPlayer()
     {
-        velocity = (player.transform.position - ik.target.position).normalized;
+        velocity = (player.transform.position - ik.target).normalized;
         velocity.y = 0;
     }
 
@@ -30,7 +30,7 @@ public class WormEnemy : Enemy
 
     public override void Move()
     {
-        ik.target.position += velocity * moveSpeed;
+        ik.target += velocity * moveSpeed;
     }
 
     void Start()
@@ -73,7 +73,7 @@ public class WormEnemy : Enemy
             target.transform.position = joints[joints.Count - 1].transform.position;
         }
 
-        ik.target = target.transform;
+        ik.target = target.transform.position;
         ik.Awake();
     }
 
