@@ -11,10 +11,6 @@ public class SkeletonEnemy : Enemy
     {
     }
 
-    public override void LookAtPlayer()
-    {
-    }
-
     public override void Move()
     {
         transform.position += velocity;

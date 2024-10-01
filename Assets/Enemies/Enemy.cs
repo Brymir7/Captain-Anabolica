@@ -37,8 +37,12 @@ public abstract class Enemy : MonoBehaviour
         velocity = transform.forward * MoveSpeed;
     }
 
-    public abstract void LookAtPlayer();
-
+    public virtual void LookAtPlayer()
+    {
+        Vector3 direction = Player.position - transform.position;
+        direction.y = 0;
+        transform.rotation = Quaternion.LookRotation(direction);
+    }
 
     public abstract void Attack();
 
@@ -76,7 +80,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if (other.tag == "Bullet")
         {
-            PistolBullet bullet = other.GetComponent<PistolBullet>();
+            ProjectileBase bullet = other.GetComponent<ProjectileBase>();
             TakeDamage(bullet.GetDamage());
             Destroy(other.gameObject);
         }

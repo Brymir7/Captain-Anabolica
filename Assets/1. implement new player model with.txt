@@ -18,8 +18,13 @@ spiders lay eggs (forces exploraiton), we have small forest, an elevated area in
 also some walls
 
 basic arena layout
-implement new weapon, (get all enemies then filter or sth?)
+implement new weapon, (get all enemies then filter or sth?), 
 make sure shooting works correctly
 try making a round where all enemies will spawn and its actually kinda fun?
 implement levelling system, health bar UI, health bars on enemies
 how to make it look good? 
+
+
+
+fix skeleton path finding -> 
+implement grenade launcher, 
