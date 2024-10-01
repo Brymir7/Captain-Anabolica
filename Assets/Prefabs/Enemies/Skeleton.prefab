@@ -217,10 +217,8 @@ MonoBehaviour:
   rightLeg: {fileID: 6715480345952454363}
   leftArm: {fileID: 3306122078535932735}
   rightArm: {fileID: 3651250802419981941}
-  relativeLegPosition:
-  - {x: 0, y: 0, z: 0.2}
-  - {x: 0, y: 0, z: 0.5}
-  animationDuration: 1
+  stepHeight: 0.5
+  stepDistance: 1
 --- !u!114 &4024247253484952710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb92e914a774f50419043dbd96f7912f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &714068803432307655
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +243,6 @@ GameObject:
   - component: {fileID: 8635587730874145228}
   - component: {fileID: 8922141111669864399}
   - component: {fileID: 417109169825878040}
-  - component: {fileID: 658535795593911285}
   m_Layer: 0
   m_Name: Knee
   m_TagString: Untagged
@@ -317,27 +315,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &658535795593911285
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714068803432307655}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1003096325632796540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,7 +1474,6 @@ GameObject:
   - component: {fileID: 4350062950351359618}
   - component: {fileID: 6661684007400801885}
   - component: {fileID: 804400708103053847}
-  - component: {fileID: 6614458404209952661}
   m_Layer: 0
   m_Name: Foot
   m_TagString: Untagged
@@ -1570,27 +1546,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6614458404209952661
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2772536297534083557}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2774936907350150352
 GameObject:
   m_ObjectHideFlags: 0
@@ -4539,7 +4494,6 @@ GameObject:
   - component: {fileID: 7757262887212791674}
   - component: {fileID: 5441461712023125440}
   - component: {fileID: 422008583469349172}
-  - component: {fileID: 5307537394019546411}
   m_Layer: 0
   m_Name: Knee
   m_TagString: Untagged
@@ -4612,27 +4566,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5307537394019546411
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7045307103997299250}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7149285287442548281
 GameObject:
   m_ObjectHideFlags: 0
@@ -4644,7 +4577,6 @@ GameObject:
   - component: {fileID: 3922645755542512128}
   - component: {fileID: 5748873698080623781}
   - component: {fileID: 6783815708009370519}
-  - component: {fileID: 3894311637583934989}
   m_Layer: 0
   m_Name: Foot
   m_TagString: Untagged
@@ -4717,27 +4649,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3894311637583934989
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7149285287442548281}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7266512980939497896
 GameObject:
   m_ObjectHideFlags: 0
