@@ -575,7 +575,7 @@ MonoBehaviour:
     spawnWeight: 1
     minSpawnDistance: 0
     maxSpawnDistance: 10
-  spawnInterval: 2
+  spawnInterval: 1
   maxEnemies: 1
   difficultyModifier: 1
   activeEnemies: []

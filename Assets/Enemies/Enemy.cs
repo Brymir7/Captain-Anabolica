@@ -85,4 +85,15 @@ public abstract class Enemy : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
+
+    protected void OnCollisionEnter(Collision collision)
+    {
+        var obj = collision.gameObject;
+        if (obj.CompareTag("Bullet"))
+        {
+            ProjectileBase bullet = obj.GetComponent<ProjectileBase>();
+            TakeDamage(bullet.GetDamage());
+            Destroy(obj);
+        }
+    }
 }

@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 8039165917678424102}
   m_Layer: 0
   m_Name: Skeleton
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -194,10 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftLeg: {fileID: 4186684029726410583}
   rightLeg: {fileID: 6715480345952454363}
-  leftArm: {fileID: 3306122078535932735}
-  rightArm: {fileID: 3651250802419981941}
   animateLegs: 1
-  animateArms: 0
   epsilonForSameLoop: 1
   stepDistance: 1.5
   animationTime: 2

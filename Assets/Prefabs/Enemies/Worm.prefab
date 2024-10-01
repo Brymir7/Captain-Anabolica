@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4757349987409375160}
   m_Layer: 0
   m_Name: Worm
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,8 +91,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joints: []
-  target: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
   pole: {fileID: 0}
   keepAnchorPosition: 0
-  epsilon_for_target: 0.1
   totalBoneLength: 0
+  epsilonForTarget: 0.1
