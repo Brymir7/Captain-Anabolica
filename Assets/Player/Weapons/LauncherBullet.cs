@@ -6,7 +6,7 @@ class LauncherBullet : ProjectileBase
     [SerializeField] private int children = 1; // Initial health of the bullet
     [SerializeField] private GameObject bulletPrefab; // Prefab for spawning new bullets
     [SerializeField] private GameObject miniExplosionVFX; // Prefab for mini explosion effect
-
+    [SerializeField] private float childrenRelativeSpeed;
     protected void OnCollisionEnter(Collision collision)
     {   
         print("Collision");
@@ -34,6 +34,8 @@ class LauncherBullet : ProjectileBase
             Quaternion newRotation = Quaternion.LookRotation(reflection);
             GameObject newBullet = Instantiate(bulletPrefab, transform.position, newRotation);
             LauncherBullet childBullet = newBullet.GetComponent<LauncherBullet>();
+            childBullet.SetDirection(reflection + childBullet.transform.up);
+            childBullet.SetSpeed(speed*childrenRelativeSpeed) ;
             Assert.IsTrue(childBullet);
             {
                 childBullet.children = children - 1;
