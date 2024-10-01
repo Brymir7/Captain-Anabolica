@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -10,9 +8,9 @@ public class WormEnemy : Enemy
     public GameObject jointPrefab;
     public GameObject connectorPrefab;
     public GameObject target;
-    private List<GameObject> joints = new List<GameObject>();
-    private List<GameObject> connectors = new List<GameObject>();
-    private IK ik;
+    private List<GameObject> _joints = new List<GameObject>();
+    private List<GameObject> _connectors = new List<GameObject>();
+    private IK _ik;
 
     public override void Attack()
     {
@@ -20,7 +18,7 @@ public class WormEnemy : Enemy
 
     public override void TargetPlayer()
     {
-        velocity = (player.transform.position - ik.target).normalized;
+        velocity = (Player.transform.position - _ik.target).normalized;
         velocity.y = 0;
     }
 
@@ -30,13 +28,13 @@ public class WormEnemy : Enemy
 
     public override void Move()
     {
-        ik.target += velocity * moveSpeed;
+        _ik.target += velocity * MoveSpeed;
     }
 
     void Start()
     {
-        ik = GetComponent<IK>();
-        Assert.IsTrue(ik != null);
+        _ik = GetComponent<IK>();
+        Assert.IsTrue(_ik != null);
         CreateWorm();
     }
 
@@ -47,20 +45,20 @@ public class WormEnemy : Enemy
         {
             GameObject newJoint = Instantiate(jointPrefab, startPosition, Quaternion.identity);
             newJoint.transform.parent = transform;
-            ik.joints.Add(newJoint.transform);
-            joints.Add(newJoint);
+            _ik.joints.Add(newJoint.transform);
+            _joints.Add(newJoint);
             if (i > 0)
             {
                 GameObject newConnector = Instantiate(connectorPrefab, startPosition, Quaternion.identity);
                 newConnector.transform.parent = transform;
                 Connector connectorScript = newConnector.GetComponent<Connector>();
                 Assert.IsTrue(connectorScript != null);
-                connectorScript.startJoint = joints[i - 1].transform;
+                connectorScript.startJoint = _joints[i - 1].transform;
                 connectorScript.endJoint = newJoint.transform;
                 connectorScript.UpdateConnector();
                 BoxCollider boxCollider = newConnector.AddComponent<BoxCollider>();
 
-                connectors.Add(newConnector);
+                _connectors.Add(newConnector);
             }
 
             startPosition += transform.forward;
@@ -70,11 +68,11 @@ public class WormEnemy : Enemy
         {
             target = new GameObject("WormTarget");
             target.transform.parent = transform;
-            target.transform.position = joints[joints.Count - 1].transform.position;
+            target.transform.position = _joints[_joints.Count - 1].transform.position;
         }
 
-        ik.target = target.transform.position;
-        ik.Awake();
+        _ik.target = target.transform.position;
+        _ik.Awake();
     }
 
     new void OnTriggerEnter(Collider other)
@@ -82,14 +80,14 @@ public class WormEnemy : Enemy
         if (other.tag == "Bullet")
         {
             ProjectileBase bullet = other.GetComponent<ProjectileBase>();
-            var JointToRemove = joints[joints.Count - 1];
-            var ConnectorToRemove = connectors[connectors.Count - 1];
+            var jointToRemove = _joints[_joints.Count - 1];
+            var connectorToRemove = _connectors[_connectors.Count - 1];
             var dmg = bullet.GetDamage();
             Destroy(other.gameObject);
-            joints.Remove(JointToRemove);
-            connectors.Remove(ConnectorToRemove);
-            Destroy(JointToRemove);
-            Destroy(ConnectorToRemove);
+            _joints.Remove(jointToRemove);
+            _connectors.Remove(connectorToRemove);
+            Destroy(jointToRemove);
+            Destroy(connectorToRemove);
 
             amountOfSegments -= dmg;
 
@@ -98,7 +96,7 @@ public class WormEnemy : Enemy
                 dmg += 1;
             }
 
-            ik.RemoveLastJoint();
+            _ik.RemoveLastJoint();
             TakeDamage(dmg);
         }
     }

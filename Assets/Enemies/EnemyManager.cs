@@ -1,99 +1,101 @@
-using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.Assertions;
 
-
-public class EnemyManager : MonoBehaviour
+namespace Enemies
 {
-    [System.Serializable]
-    public class EnemySpawnInfo
+    public class EnemyManager : MonoBehaviour
     {
-        public EnemyType enemyType;
-        public GameObject enemyPrefab;
-        public float spawnWeight = 1f;
-        public float minSpawnDistance = 10f;
-        public float maxSpawnDistance = 20f;
-    }
-
-    [SerializeField] private List<EnemySpawnInfo> enemySpawnInfos;
-    [SerializeField] private float spawnInterval = 2f;
-    [SerializeField] private int maxEnemies = 50;
-
-    private float nextSpawnTime;
-    public float difficultyModifier = 1f;
-    public List<Enemy> activeEnemies = new List<Enemy>();
-    private List<Transform> enemyTransforms = new List<Transform>();
-    private List<GameObject> activeEnemyObjects = new List<GameObject>();
-
-    public List<Transform> GetTransforms()
-    {
-        return enemyTransforms;
-    }
-
-    private void FixedUpdate()
-    {
-        if (Time.time >= nextSpawnTime && activeEnemies.Count < maxEnemies)
+        [System.Serializable]
+        public class EnemySpawnInfo
         {
-            SpawnEnemy();
-            nextSpawnTime = Time.time + spawnInterval;
+            public EnemyType enemyType;
+            public GameObject enemyPrefab;
+            public float spawnWeight = 1f;
+            public float minSpawnDistance = 10f;
+            public float maxSpawnDistance = 20f;
         }
-    }
 
-    private void HandleEnemyDeath(Enemy enemy)
-    {
-        int index = activeEnemies.IndexOf(enemy);
-        if (index >= 0)
+        [SerializeField] private List<EnemySpawnInfo> enemySpawnInfos;
+        [SerializeField] private float spawnInterval = 2f;
+        [SerializeField] private int maxEnemies = 50;
+
+        private float _nextSpawnTime;
+        public float difficultyModifier = 1f;
+        public List<Enemy> activeEnemies = new List<Enemy>();
+        private readonly List<Transform> _enemyTransforms = new List<Transform>();
+        private readonly List<GameObject> _activeEnemyObjects = new List<GameObject>();
+
+        public List<Transform> GetTransforms()
         {
-            Destroy(activeEnemyObjects[index]);
-            activeEnemies.RemoveAt(index);
-            enemyTransforms.RemoveAt(index);
-            activeEnemyObjects.RemoveAt(index);
+            return _enemyTransforms;
         }
-    }
 
-    private void SpawnEnemy()
-    {
-        EnemySpawnInfo spawnInfo = GetRandomEnemySpawnInfo();
-        Vector3 spawnPosition = GetRandomSpawnPosition(spawnInfo);
-
-        GameObject enemyObject = Instantiate(spawnInfo.enemyPrefab, spawnPosition, Quaternion.identity);
-        Enemy enemyComponent = enemyObject.GetComponent<Enemy>();
-        Assert.IsTrue(enemyComponent != null);
-        enemyComponent.Initialize(spawnInfo.enemyType);
-        switch (spawnInfo.enemyType)
+        private void FixedUpdate()
         {
-            case EnemyType.Worm:
-                WormEnemy worm = enemyObject.GetComponent<WormEnemy>();
-                var amountOfSegments = Random.Range(5, 12);
-                worm.amountOfSegments = amountOfSegments;
-                enemyComponent.SetHealth(amountOfSegments);
-                enemyComponent.transform.localScale = Vector3.one * (worm.amountOfSegments * difficultyModifier);
-                break;
-            default:
-                break;
+            if (Time.time >= _nextSpawnTime && activeEnemies.Count < maxEnemies)
+            {
+                SpawnEnemy();
+                _nextSpawnTime = Time.time + spawnInterval;
+            }
         }
-        enemyComponent.transform.parent = transform;
-        enemyComponent.OnEnemyDeath += HandleEnemyDeath;
-        activeEnemies.Add(enemyComponent);
-        enemyTransforms.Add(enemyObject.transform);
-        activeEnemyObjects.Add(enemyObject);
-    }
 
-    private EnemySpawnInfo GetRandomEnemySpawnInfo()
-    {
-        float totalWeight = enemySpawnInfos.Sum(info => info.spawnWeight);
-        float randomValue = Random.Range(0f, totalWeight);
-        return enemySpawnInfos.FirstOrDefault(info => (randomValue -= info.spawnWeight) < 0);
-    }
+        private void HandleEnemyDeath(Enemy enemy)
+        {
+            int index = activeEnemies.IndexOf(enemy);
+            if (index >= 0)
+            {
+                Destroy(_activeEnemyObjects[index]);
+                activeEnemies.RemoveAt(index);
+                _enemyTransforms.RemoveAt(index);
+                _activeEnemyObjects.RemoveAt(index);
+            }
+        }
 
-    private Vector3 GetRandomSpawnPosition(EnemySpawnInfo spawnInfo)
-    {
-        float angle = Random.Range(0f, 360f);
-        float distance = Random.Range(spawnInfo.minSpawnDistance, spawnInfo.maxSpawnDistance);
+        // ReSharper disable Unity.PerformanceAnalysis
+        private void SpawnEnemy()
+        {
+            EnemySpawnInfo spawnInfo = GetRandomEnemySpawnInfo();
+            Vector3 spawnPosition = GetRandomSpawnPosition(spawnInfo);
 
-        Vector3 spawnPosition = Quaternion.Euler(0f, angle, 0f) * Vector3.forward * distance;
-        spawnPosition.y = 3f;
-        return spawnPosition;
+            GameObject enemyObject = Instantiate(spawnInfo.enemyPrefab, spawnPosition, Quaternion.identity);
+            Enemy enemyComponent = enemyObject.GetComponent<Enemy>();
+            Assert.IsTrue(enemyComponent);
+            enemyComponent.Initialize(spawnInfo.enemyType);
+            switch (spawnInfo.enemyType)
+            {
+                case EnemyType.Worm:
+                    var worm = enemyObject.GetComponent<WormEnemy>();
+                    var amountOfSegments = Random.Range(5, 12);
+                    worm.amountOfSegments = amountOfSegments;
+                    enemyComponent.SetHealth(amountOfSegments);
+                    enemyComponent.transform.localScale = Vector3.one * (worm.amountOfSegments * difficultyModifier);
+                    break;
+            }
+
+            enemyComponent.transform.parent = transform;
+            enemyComponent.OnEnemyDeath += HandleEnemyDeath;
+            activeEnemies.Add(enemyComponent);
+            _enemyTransforms.Add(enemyObject.transform);
+            _activeEnemyObjects.Add(enemyObject);
+        }
+
+        private EnemySpawnInfo GetRandomEnemySpawnInfo()
+        {
+            float totalWeight = enemySpawnInfos.Sum(info => info.spawnWeight);
+            float randomValue = Random.Range(0f, totalWeight);
+            return enemySpawnInfos.FirstOrDefault(info => (randomValue -= info.spawnWeight) < 0);
+        }
+
+        private Vector3 GetRandomSpawnPosition(EnemySpawnInfo spawnInfo)
+        {
+            float angle = Random.Range(0f, 360f);
+            float distance = Random.Range(spawnInfo.minSpawnDistance, spawnInfo.maxSpawnDistance);
+
+            Vector3 spawnPosition = Quaternion.Euler(0f, angle, 0f) * Vector3.forward * distance;
+            spawnPosition.y = 0.7f;
+            return spawnPosition;
+        }
     }
 }

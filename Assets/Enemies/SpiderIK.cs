@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Vector3 = UnityEngine.Vector3;
@@ -46,7 +45,7 @@ public class SpiderIK : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
         foreach (var pair in legIKPairs)
         {

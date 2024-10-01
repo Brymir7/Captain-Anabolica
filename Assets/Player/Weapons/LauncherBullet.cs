@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-class LauncherBullet : ProjectileBase
+﻿class LauncherBullet : ProjectileBase
 {
   
 }

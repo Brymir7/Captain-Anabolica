@@ -12,36 +12,36 @@ public enum WeaponType
 
 public class WeaponHandling : MonoBehaviour
 {
-    private bool isTransitioning;
-    private bool isHolding;
+    private bool _isTransitioning;
+    private bool _isHolding;
     public List<GameObject> weapons;
     public Transform weaponPosition;
-    private Pistol pistol;
-    private Launcher launcher;
+    private Pistol _pistol;
+    private Launcher _launcher;
 
     public WeaponType selectedWeapon = WeaponType.Pistol;
 
 
-    private Dictionary<WeaponType, GameObject> weaponInstances = new Dictionary<WeaponType, GameObject>();
-    private GameObject currentWeapon;
+    private Dictionary<WeaponType, GameObject> _weaponInstances = new Dictionary<WeaponType, GameObject>();
+    private GameObject _currentWeapon;
 
     private void Start()
     {
         foreach (WeaponType weaponType in System.Enum.GetValues(typeof(WeaponType)))
         {
             InitializeWeapon(weaponType);
-            weaponInstances[weaponType].transform.SetParent(weaponPosition);
-            weaponInstances[weaponType].SetActive(false);
+            _weaponInstances[weaponType].transform.SetParent(weaponPosition);
+            _weaponInstances[weaponType].SetActive(false);
             switch (weaponType)
             {
                 case WeaponType.Pistol:
-                    weaponInstances[weaponType].transform.localPosition = new Vector3(-0.06f, -0.241f, 1.419f);
-                    weaponInstances[weaponType].transform.localScale = Vector3.one * 3.0f;
+                    _weaponInstances[weaponType].transform.localPosition = new Vector3(-0.06f, -0.241f, 1.419f);
+                    _weaponInstances[weaponType].transform.localScale = Vector3.one * 3.0f;
                     break;
                 case WeaponType.GrenadeLauncher: // refactor into unity interface if necessary
-                    weaponInstances[weaponType].transform.localPosition = new Vector3(0.19f, -0.02f, 1.73f);
-                    weaponInstances[weaponType].transform.rotation = Quaternion.Euler(0, 179, 3);
-                    weaponInstances[weaponType].transform.localScale = Vector3.one * 0.2691f;
+                    _weaponInstances[weaponType].transform.localPosition = new Vector3(0.19f, -0.02f, 1.73f);
+                    _weaponInstances[weaponType].transform.rotation = Quaternion.Euler(0, 179, 3);
+                    _weaponInstances[weaponType].transform.localScale = Vector3.one * 0.2691f;
                     break;
             }
         }
@@ -54,31 +54,31 @@ public class WeaponHandling : MonoBehaviour
         var weaponInfo = weapons[(int)weaponType];
         var weaponInstance = Instantiate(weaponInfo, weaponPosition.position, weaponPosition.rotation);
         weaponInstance.transform.localScale = Vector3.one * 3.0f;
-        weaponInstances[weaponType] = weaponInstance;
+        _weaponInstances[weaponType] = weaponInstance;
 
         if (weaponType == WeaponType.Pistol)
         {
-            pistol = weaponInstance.GetComponent<Pistol>();
-            Assert.IsTrue(pistol);
+            _pistol = weaponInstance.GetComponent<Pistol>();
+            Assert.IsTrue(_pistol);
         }
 
         if (weaponType == WeaponType.GrenadeLauncher)
         {
-            launcher = weaponInstance.GetComponent<Launcher>();
-            Assert.IsTrue(launcher);
+            _launcher = weaponInstance.GetComponent<Launcher>();
+            Assert.IsTrue(_launcher);
         }
     }
 
     private void SetWeaponInHand(WeaponType weaponType)
     {
-        currentWeapon = weaponInstances[weaponType];
-        currentWeapon.transform.SetParent(weaponPosition);
-        currentWeapon.SetActive(true);
+        _currentWeapon = _weaponInstances[weaponType];
+        _currentWeapon.transform.SetParent(weaponPosition);
+        _currentWeapon.SetActive(true);
     }
 
     public void SwitchWeapon()
     {
-        currentWeapon.SetActive(false);
+        _currentWeapon.SetActive(false);
 
         selectedWeapon++;
         if ((int)selectedWeapon >= System.Enum.GetValues(typeof(WeaponType)).Length)
@@ -91,7 +91,7 @@ public class WeaponHandling : MonoBehaviour
 
     public void SwitchToWeapon(WeaponType wType)
     {
-        currentWeapon.SetActive(false);
+        _currentWeapon.SetActive(false);
         selectedWeapon = wType;
         SetWeaponInHand(wType);
     }
@@ -101,10 +101,10 @@ public class WeaponHandling : MonoBehaviour
         switch (selectedWeapon)
         {
             case WeaponType.Pistol:
-                pistol.Shoot(playerCamera);
+                _pistol.Shoot(playerCamera);
                 break;
             case WeaponType.GrenadeLauncher:
-                launcher.Shoot(playerCamera);
+                _launcher.Shoot(playerCamera);
                 break;
         }
     }

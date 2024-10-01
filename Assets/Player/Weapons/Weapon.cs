@@ -5,7 +5,7 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField] protected float cooldown = 1.0f;
     [SerializeField] protected GameObject projectilePrefab;
 
-    protected float lastShotTime = 0.0f;
+    protected float LastShotTime = 0.0f;
 
     //public virtual void SetProjectilePrefab(GameObject prefab)
     //{
@@ -14,7 +14,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     protected virtual bool CanShoot()
     {
-        return Time.time - lastShotTime > cooldown;
+        return Time.time - LastShotTime > cooldown;
     }
 
     public virtual void Shoot(Camera playerCamera)
@@ -24,7 +24,7 @@ public abstract class WeaponBase : MonoBehaviour
             Vector3 direction = CalculateShootDirection(playerCamera);
             GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             InitializeProjectile(projectile, direction);
-            lastShotTime = Time.time;
+            LastShotTime = Time.time;
         }
     }
 

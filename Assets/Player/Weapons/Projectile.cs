@@ -7,20 +7,20 @@ public abstract class ProjectileBase : MonoBehaviour
     [SerializeField] protected float lifetime = 0f;
     [SerializeField] protected float maxDistance = 100f;
 
-    protected Rigidbody rb;
+    protected Rigidbody Rb;
 
     protected virtual void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        if (rb == null)
+        Rb = GetComponent<Rigidbody>();
+        if (Rb == null)
         {
-            rb = gameObject.AddComponent<Rigidbody>();
+            Rb = gameObject.AddComponent<Rigidbody>();
         }
     }
 
     protected virtual void FixedUpdate()
     {
-        if (rb.position.magnitude > maxDistance)
+        if (Rb.position.magnitude > maxDistance)
         {
             Destroy(gameObject);
         }
@@ -28,15 +28,15 @@ public abstract class ProjectileBase : MonoBehaviour
 
     public virtual void SetDirection(Vector3 direction)
     {
-        rb.velocity = direction.normalized * speed;
+        Rb.velocity = direction.normalized * speed;
     }
 
     public virtual void SetSpeed(float newSpeed)
     {
         speed = newSpeed;
-        if (rb != null && rb.velocity != Vector3.zero)
+        if (Rb != null && Rb.velocity != Vector3.zero)
         {
-            rb.velocity = rb.velocity.normalized * speed;
+            Rb.velocity = Rb.velocity.normalized * speed;
         }
     }
 

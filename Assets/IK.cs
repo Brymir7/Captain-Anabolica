@@ -1,21 +1,25 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class IK : MonoBehaviour
 {
-    public List<Transform> joints = new List<Transform>();
+    public List<Transform> joints;
     public Vector3 target;
     public Transform pole;
-    public bool keepAnchorPosition = true;
-    private bool pole_exists = false;
-    public float epsilon_for_target = 0.1f;
+    public bool keepAnchorPosition;
+    private bool _poleExists;
     private int _endEffector;
-    private int maxIterations = 10;
+    private int _maxIterations = 10;
     private const int AnchorJoint = 0;
+    private List<float> _boneLengths = new List<float>();
     [HideInInspector] public float totalBoneLength = 0;
-    private List<float> bone_lengths = new List<float>();
+
+    [FormerlySerializedAs("epsilon_for_target")]
+    public float epsilonForTarget = 0.1f;
+
 
     public void RemoveLastJoint()
     {
@@ -33,44 +37,59 @@ public class IK : MonoBehaviour
         _endEffector = joints.Count - 1;
         for (int i = AnchorJoint; i < _endEffector; i++)
         {
-            bone_lengths.Add(Vector3.Distance(joints[i].position, joints[i + 1].position));
+            _boneLengths.Add(Vector3.Distance(joints[i].position, joints[i + 1].position));
         }
 
-        if (pole != null) pole_exists = true;
-        totalBoneLength = bone_lengths.Sum();
+        if (pole != null) _poleExists = true;
+        totalBoneLength = _boneLengths.Sum();
     }
 
-    void FixedUpdate()
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool MoveIKObjectToTarget(IK ik, Vector3 target, float time, float duration)
     {
-        float dist_to_target = Vector3.Distance(target, joints[AnchorJoint].position);
-        if (dist_to_target > totalBoneLength && keepAnchorPosition)
+        Vector3 initialPos = ik.target;
+        while (time < duration)
+        {
+            ik.target = Vector3.Lerp(initialPos, target, time / duration);
+            time += Time.deltaTime;
+            return false;
+        }
+
+        ik.target = target;
+        return true;
+    }
+
+    void Update()
+    {
+        float distToTarget = Vector3.Distance(target, joints[AnchorJoint].position);
+        if (distToTarget > totalBoneLength && keepAnchorPosition)
         {
             for (int i = AnchorJoint + 1; i <= _endEffector; i++)
             {
                 Vector3 direction = (target - joints[AnchorJoint].position).normalized;
-                joints[i].position = joints[i - 1].position + direction * bone_lengths[i - 1];
+                joints[i].position = joints[i - 1].position + direction * _boneLengths[i - 1];
             }
 
             return;
         }
         else
         {
-            float distance_last_joint_target = Vector3.Distance(joints[_endEffector].position, target);
+            float distanceLastJointTarget = Vector3.Distance(joints[_endEffector].position, target);
             int iterations = 0;
-            Vector3 original_anchor_position = joints[AnchorJoint].position;
-            while (iterations < maxIterations && distance_last_joint_target > epsilon_for_target)
+            Vector3 originalAnchorPosition = joints[AnchorJoint].position;
+            while (iterations < _maxIterations && distanceLastJointTarget > epsilonForTarget)
             {
                 iterations += 1;
                 joints[_endEffector].position = target;
                 for (int i = _endEffector - 1; i >= AnchorJoint; i--)
                 {
-                    Vector3 norm_adjustment = (joints[i].position - joints[i + 1].position).normalized;
+                    Vector3 normAdjustment = (joints[i].position - joints[i + 1].position).normalized;
                     joints[i].position = joints[i + 1].position +
-                                         norm_adjustment *
-                                         bone_lengths[i];
+                                         normAdjustment *
+                                         _boneLengths[i];
                 }
 
-                if (pole_exists)
+                if (_poleExists)
                 {
                     for (int i = 1; i < _endEffector; i++)
                     {
@@ -91,16 +110,16 @@ public class IK : MonoBehaviour
 
                 if (keepAnchorPosition)
                 {
-                    joints[AnchorJoint].position = original_anchor_position;
+                    joints[AnchorJoint].position = originalAnchorPosition;
                     for (int i = AnchorJoint + 1; i <= _endEffector; i++)
                     {
                         joints[i].position = joints[i - 1].position +
                                              (joints[i].position - joints[i - 1].position).normalized *
-                                             bone_lengths[i - 1];
+                                             _boneLengths[i - 1];
                     }
                 }
 
-                distance_last_joint_target = Vector3.Distance(joints[_endEffector].position, target);
+                distanceLastJointTarget = Vector3.Distance(joints[_endEffector].position, target);
             }
         }
     }

@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,15 +10,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public  float moveSpeed = 0.15f;
-    private Vector3 moveDirection = Vector3.zero;
+    private Vector3 _moveDirection = Vector3.zero;
 
     public void UpdateMoveDirection(float moveHorizontal, float moveVertical)
     {
-        moveDirection = (transform.right * moveHorizontal + transform.forward * moveVertical);
+        _moveDirection = (transform.right * moveHorizontal + transform.forward * moveVertical);
     }
 
     public void FixedUpdate()
     {
-        _rb.MovePosition(transform.position + moveDirection * moveSpeed);
+        _rb.MovePosition(transform.position + _moveDirection * moveSpeed);
     }
 }

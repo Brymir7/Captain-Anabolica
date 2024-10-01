@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Enemies;
 using UnityEngine.Assertions;
 
 public class EnemyIndicatorManager : MonoBehaviour

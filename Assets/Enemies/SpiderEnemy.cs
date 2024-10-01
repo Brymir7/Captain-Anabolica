@@ -8,7 +8,7 @@ public class SpiderEnemy : Enemy
 
     public override void LookAtPlayer()
     {
-        Vector3 direction = player.position - transform.position;
+        Vector3 direction = Player.position - transform.position;
         direction.y = 0;
         transform.rotation = Quaternion.LookRotation(direction);
     }

@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RollingCubeEnemy : Enemy
 {
     private Rigidbody _rb;
-    public float _toppleForce = 2.1f;
+    [FormerlySerializedAs("_toppleForce")] public float toppleForce = 2.1f;
     private bool _isToppling = false;
-    public float next_step_after_s = 0.7f;
+    [FormerlySerializedAs("next_step_after_s")] public float nextStepAfterS = 0.7f;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -20,15 +21,15 @@ public class RollingCubeEnemy : Enemy
         if (!_isToppling)
         {
             Vector3 direction = Vector3.zero;   
-            float abs_x = Mathf.Abs(velocity.x);
-            float abs_z = Mathf.Abs(velocity.z);
-            float maxComponent = Mathf.Max(abs_x, abs_z);
+            float absX = Mathf.Abs(velocity.x);
+            float absZ = Mathf.Abs(velocity.z);
+            float maxComponent = Mathf.Max(absX, absZ);
 
-            if (maxComponent == abs_z)
+            if (maxComponent == absZ)
             {
                 direction = velocity.z > 0 ? Vector3.forward : Vector3.back;
             }
-            else if (maxComponent == abs_x)
+            else if (maxComponent == absX)
             {
                 direction = velocity.x > 0 ? Vector3.right : Vector3.left;
             }
@@ -45,12 +46,12 @@ public class RollingCubeEnemy : Enemy
     void Topple(Vector3 direction)
     {
         _isToppling = true;
-        _rb.AddForceAtPosition(direction * _toppleForce, transform.position + Vector3.up * 0.5f, ForceMode.Impulse);
-        Invoke("ResetTopple", next_step_after_s);
+        _rb.AddForceAtPosition(direction * toppleForce, transform.position + Vector3.up * 0.5f, ForceMode.Impulse);
+        Invoke("ResetTopple", nextStepAfterS);
     }
     public override void TargetPlayer()
     {
-        velocity = (player.transform.position - transform.position).normalized;
+        velocity = (Player.transform.position - transform.position).normalized;
     }
 
     void ResetTopple()
