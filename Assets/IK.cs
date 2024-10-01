@@ -44,21 +44,6 @@ public class IK : MonoBehaviour
         totalBoneLength = _boneLengths.Sum();
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool MoveIKObjectToTarget(IK ik, Vector3 target, float time, float duration)
-    {
-        Vector3 initialPos = ik.target;
-        while (time < duration)
-        {
-            ik.target = Vector3.Lerp(initialPos, target, time / duration);
-            time += Time.deltaTime;
-            return false;
-        }
-
-        ik.target = target;
-        return true;
-    }
-
     void Update()
     {
         float distToTarget = Vector3.Distance(target, joints[AnchorJoint].position);

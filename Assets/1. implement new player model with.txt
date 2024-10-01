@@ -26,5 +26,12 @@ how to make it look good?
 
 
 
-fix skeleton path finding -> 
+
 implement grenade launcher, 
+implement levelling system, pick up grenade launcher
+
+if enemy hits player, move object right into the players face like a jump scare
+implement actual special things about spider, skeleton -> skeleton falls apart but will still move, spider can have short sprints?
+
+implement horse, 
+implement bipedal mob which just jumps -> goblin?

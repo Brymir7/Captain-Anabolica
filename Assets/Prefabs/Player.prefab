@@ -315,11 +315,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  target: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
   pole: {fileID: 0}
   keepAnchorPosition: 1
-  epsilon_for_target: 0.1
   totalBoneLength: 0
+  epsilonForTarget: 0.1
 --- !u!1 &4935325011079091550
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,7 +426,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2262892891029279230}
-  _rotationLimits: {x: -90, y: 90}
+  rotationLimits: {x: -90, y: 90}
+  offset: {x: 2, y: 0, z: -1.5}
 --- !u!1 &5864549000358890912
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,10 +1209,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
-  - weaponPrefab: {fileID: 2842792535875324584, guid: a98c478808be8ec4285b7c02cd28d5ff, type: 3}
-    projectilePrefab: {fileID: 329420646280659486, guid: 38d85b73c7c77eb4694104b2251696bf, type: 3}
-  - weaponPrefab: {fileID: 919132149155446097, guid: c0d471de86764fa4bbde8155a28b127a, type: 3}
-    projectilePrefab: {fileID: 329420646280659486, guid: 38d85b73c7c77eb4694104b2251696bf, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
   weaponPosition: {fileID: 5781983027398923007}
   selectedWeapon: 0
 --- !u!114 &927618895108895217
