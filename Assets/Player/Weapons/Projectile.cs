@@ -4,12 +4,13 @@ namespace Player.Weapons
 {
     public abstract class ProjectileBase : MonoBehaviour
     {
-        [SerializeField] protected float speed = 100f;
-        [SerializeField] protected int damage = 1;
-        [SerializeField] protected float lifetime = 0f;
-        [SerializeField] protected float maxDistance = 100f;
-
+        [SerializeField] protected float speed;
+        [SerializeField] protected int damage;
+        [SerializeField] protected float lifetime;
+        [SerializeField] protected float maxDistance;
+        private bool _isEnabled = true;
         protected Rigidbody Rb;
+        protected Collider Collid;
 
         protected virtual void Awake()
         {
@@ -18,6 +19,13 @@ namespace Player.Weapons
             {
                 Rb = gameObject.AddComponent<Rigidbody>();
             }
+
+            Collid = GetComponent<Collider>();
+        }
+
+        public bool IsAlive()
+        {
+            return _isEnabled;
         }
 
         protected virtual void FixedUpdate()
@@ -59,12 +67,28 @@ namespace Player.Weapons
             maxDistance = newMaxDistance;
         }
 
-        protected virtual void DestroyProjectile()
+        public void DestroyProjectile()
         {
+            _isEnabled = false;
             Destroy(gameObject);
         }
 
-        public virtual int GetDamage()
+        public void DisableProjectile()
+        {
+            _isEnabled = false;
+        }
+
+        public void EnableProjectile()
+        {
+            _isEnabled = true;
+        }
+
+        public void ToggleCollider()
+        {
+            Collid.enabled = !Collid.enabled;
+        }
+
+        public int GetDamage()
         {
             return damage;
         }

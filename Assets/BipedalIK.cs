@@ -69,7 +69,7 @@ public class BipedalIK : MonoBehaviour
         // if legs got stuck || are in the same loop due to physics || initial position, then only move left leg
         var sameLoop = Vector3.Distance(_rightLegIK.joints[_rightLegIK.joints.Count - 1].position,
             _leftLegIK.joints[_leftLegIK.joints.Count - 1].position) < epsilonForSameLoop;
-        if (!sameLoop && forwardDistanceRightFeetToLeftTarget > stepDistance &&
+        if (!sameLoop && forwardDistanceRightFeetToLeftTarget > stepDistance  &&
             Vector3.Distance(nextLegRightPos, _nextRightLegTarget) > stepDistance * 2.0f)
         {
             _nextRightLegTarget = nextLegRightPos;

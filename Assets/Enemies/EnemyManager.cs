@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 namespace Enemies
 {
@@ -16,15 +18,15 @@ namespace Enemies
             public float minSpawnDistance = 10f;
             public float maxSpawnDistance = 20f;
         }
-
+    
         [SerializeField] private List<EnemySpawnInfo> enemySpawnInfos;
-        [SerializeField] private float spawnInterval = 2f;
-        [SerializeField] private int maxEnemies = 50;
-
+        [SerializeField] private float baseSpawnInterval;
+        [SerializeField] private int baseMaxEnemies;
+        [SerializeField] private Transform plane;
         private float _nextSpawnTime;
-        public GameObject xpOrbPrefab;
-        public float difficultyModifier = 1f;
-        public List<Enemy> activeEnemies = new List<Enemy>();
+        [SerializeField] private GameObject xpOrbPrefab;
+        private float difficultyModifier = 1f;
+        private List<Enemy> activeEnemies = new List<Enemy>();
         private readonly List<Transform> _enemyTransforms = new List<Transform>();
         private readonly List<GameObject> _activeEnemyObjects = new List<GameObject>();
 
@@ -33,13 +35,17 @@ namespace Enemies
             return _enemyTransforms;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            if (Time.time >= _nextSpawnTime && activeEnemies.Count < maxEnemies)
+            float currentSpawnInterval = baseSpawnInterval / difficultyModifier;
+            float currentMaxEnemies = baseMaxEnemies * difficultyModifier;
+            if (Time.time >= _nextSpawnTime && activeEnemies.Count < baseMaxEnemies)
             {
                 SpawnEnemy();
-                _nextSpawnTime = Time.time + spawnInterval;
+                _nextSpawnTime = Time.time + currentSpawnInterval;
             }
+
+            difficultyModifier += Time.deltaTime / 60;
         }
 
         private void HandleEnemyDeath(Enemy enemy)
@@ -54,7 +60,6 @@ namespace Enemies
             }
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
         private void SpawnEnemy()
         {
             EnemySpawnInfo spawnInfo = GetRandomEnemySpawnInfo();
@@ -69,15 +74,27 @@ namespace Enemies
                 case EnemyType.Worm:
                     var worm = enemyObject.GetComponent<WormEnemy>();
                     var amountOfSegments = Random.Range(5, 12);
+                    Assert.IsTrue(amountOfSegments < 12, "IF AMOUNT OF SEGMENTS > 12 TARGETTING OF WORM BREAKS; DUE TO IT NOT CORRECTLY ADJUSTING BASED ON WORM TILE HEIGHT");
                     worm.amountOfSegments = amountOfSegments;
                     enemyComponent.SetHealth(amountOfSegments);
-                    enemyComponent.transform.localScale = Vector3.one * (worm.amountOfSegments * difficultyModifier);
+                    enemyComponent.transform.localScale = Vector3.one * worm.amountOfSegments;
+                    break;
+                case EnemyType.Spider:
+                    var spider = enemyComponent.GetComponent<SpiderEnemy>();
+                    spider.SetMoveSpeed(0.09f);
+                    spider.SetHealth(1);
+                    break;
+                case EnemyType.Skeleton:
+                    var skeleton = enemyComponent.GetComponent<SkeletonEnemy>();
+                    skeleton.SetMoveSpeed(0.06f);
+                    skeleton.SetHealth(3);
                     break;
             }
 
             enemyComponent.transform.parent = transform;
             enemyComponent.OnEnemyDeath += HandleEnemyDeath;
-            enemyComponent.SetXP(GetRandomXpValue(spawnInfo.enemyType), xpOrbPrefab);
+
+            enemyComponent.SetXp(GetRandomXpValue(spawnInfo.enemyType), xpOrbPrefab);
             activeEnemies.Add(enemyComponent);
             _enemyTransforms.Add(enemyObject.transform);
             _activeEnemyObjects.Add(enemyObject);

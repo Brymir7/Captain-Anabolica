@@ -595,24 +595,23 @@ MonoBehaviour:
   enemySpawnInfos:
   - enemyType: 2
     enemyPrefab: {fileID: 7322521181242813736, guid: 1bef93028ea879846b5d8ce9dbe0b3b8, type: 3}
-    spawnWeight: 0
-    minSpawnDistance: 5
-    maxSpawnDistance: 13
+    spawnWeight: 1
+    minSpawnDistance: 30
+    maxSpawnDistance: 55
   - enemyType: 1
     enemyPrefab: {fileID: 8753434687860246814, guid: 1a2828f6271f5ac46aa46defa2d1afb2, type: 3}
     spawnWeight: 1
-    minSpawnDistance: 5
-    maxSpawnDistance: 13
+    minSpawnDistance: 15
+    maxSpawnDistance: 15
   - enemyType: 0
     enemyPrefab: {fileID: 557161061857013364, guid: e1990e8f1de36bc42a889045006a8e93, type: 3}
-    spawnWeight: 0
-    minSpawnDistance: 5
-    maxSpawnDistance: 13
-  spawnInterval: 1
-  maxEnemies: 5
+    spawnWeight: 1
+    minSpawnDistance: 25
+    maxSpawnDistance: 30
+  baseSpawnInterval: 2
+  baseMaxEnemies: 2
+  plane: {fileID: 0}
   xpOrbPrefab: {fileID: 5996322711401029766, guid: a6a2c473fc208124da663bb0945230b3, type: 3}
-  difficultyModifier: 1
-  activeEnemies: []
 --- !u!1 &1285734005
 GameObject:
   m_ObjectHideFlags: 0

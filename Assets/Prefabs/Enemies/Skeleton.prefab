@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 469955901752392497}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.005, y: 4.2479997, z: 0.484}
+  m_LocalPosition: {x: -0.005, y: 4.258, z: 0.484}
   m_LocalScale: {x: 0.34878564, y: 0.10433, z: 0.10433}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -196,7 +196,7 @@ MonoBehaviour:
   rightLeg: {fileID: 6715480345952454363}
   animateLegs: 1
   epsilonForSameLoop: 1
-  stepDistance: 1.5
+  stepDistance: 1.7
   animationTime: 2
 --- !u!114 &4024247253484952710
 MonoBehaviour:
@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb92e914a774f50419043dbd96f7912f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  updateDirectionEveryFrames: 20
   onHitVFX: {fileID: 8243798984752376232, guid: 052e1949103a9f44f8a2b7545f8af880, type: 3}
   onDeathVFX: {fileID: 0}
 --- !u!136 &8039165917678424102

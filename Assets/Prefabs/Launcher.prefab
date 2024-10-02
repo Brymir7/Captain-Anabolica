@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e9483a374227b742ad892c35f3d0093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 0.5
+  cooldown: 1
   projectilePrefab: {fileID: 329420646280659486, guid: cd665a9bbdf64e740868a6fb78a6dfbc, type: 3}
 --- !u!1001 &3152354238445625850
 PrefabInstance:

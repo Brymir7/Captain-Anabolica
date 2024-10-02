@@ -1,27 +1,28 @@
 using System;
 using Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class XpOrb : MonoBehaviour
 {
     public int xpAmount;
     public float attractionSpeed = 5f; // Speed at which the orb moves towards the player
     public float maxSize = 1f;
-    public float maxXPAmount = 100f;
-    private bool isAttracting = false;
-    private Transform playerTransform;
+    [FormerlySerializedAs("maxXPAmount")] public float maxXpAmount = 100f;
+    private bool _isAttracting = false;
+    private Transform _playerTransform;
 
     void Start()
     {
-        var relativeSize = Mathf.Lerp(0.2f, maxSize, xpAmount / maxXPAmount);
+        var relativeSize = Mathf.Lerp(0.2f, maxSize, xpAmount / maxXpAmount);
         transform.localScale = new Vector3(relativeSize, relativeSize, relativeSize);
     }
 
     void Update()
     {
-        if (isAttracting)
+        if (_isAttracting)
         {
-            transform.position = Vector3.MoveTowards(transform.position, playerTransform.position,
+            transform.position = Vector3.MoveTowards(transform.position, _playerTransform.position,
                 attractionSpeed * Time.deltaTime);
         }
     }
@@ -37,7 +38,7 @@ public class XpOrb : MonoBehaviour
 
     public void StartAttraction(Transform player)
     {
-        isAttracting = true;
-        playerTransform = player;
+        _isAttracting = true;
+        _playerTransform = player;
     }
 }

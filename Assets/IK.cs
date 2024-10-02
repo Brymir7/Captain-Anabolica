@@ -29,11 +29,6 @@ public class IK : MonoBehaviour
 
     public void Awake()
     {
-        if (joints.Count <= 0)
-        {
-            Debug.Log("IK without joints");
-        }
-
         _endEffector = joints.Count - 1;
         for (int i = AnchorJoint; i < _endEffector; i++)
         {

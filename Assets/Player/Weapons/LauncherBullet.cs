@@ -12,12 +12,11 @@ namespace Player.Weapons
 
         protected void OnCollisionEnter(Collision collision)
         {
-            print("Collision");
             if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Ground"))
             {
                 SpawnMiniExplosion();
                 SpawnChildBullet(collision);
-                DestroyProjectile();
+                Destroy(gameObject);
             }
         }
 
@@ -39,10 +38,10 @@ namespace Player.Weapons
                 LauncherBullet childBullet = newBullet.GetComponent<LauncherBullet>();
                 childBullet.SetDirection(reflection + childBullet.transform.up);
                 childBullet.SetSpeed(speed * childrenRelativeSpeed);
+                childBullet.DisableProjectile();
+                Invoke("EnableProjectile", Time.deltaTime);
                 Assert.IsTrue(childBullet);
-                {
-                    childBullet.children = children - 1;
-                }
+                childBullet.children = children - 1;
             }
         }
     }
