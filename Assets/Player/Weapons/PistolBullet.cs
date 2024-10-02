@@ -1,4 +1,7 @@
-class PistolBullet : ProjectileBase
+namespace Player.Weapons
 {
+    class PistolBullet : ProjectileBase
+    {
   
+    }
 }

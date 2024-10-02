@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bedc2ce8ed5c7144b936a0cde7470967, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -169,7 +169,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bedc2ce8ed5c7144b936a0cde7470967, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -221,7 +221,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6212391282677697954}
-  - component: {fileID: 3891739673939929637}
   m_Layer: 6
   m_Name: Legs
   m_TagString: Untagged
@@ -245,23 +244,6 @@ Transform:
   - {fileID: 570468212236981971}
   m_Father: {fileID: 2262892891029279230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3891739673939929637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4168401004047559383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ac85540ba6f0b24fac50363b88753fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDistanceOfLegTillSnapback: 1
-  legIKPairs:
-  - leg: {fileID: 570468212236981971}
-    offsetFromBody: {x: 0, y: 0, z: 0}
-    ikComponent: {fileID: 0}
 --- !u!1 &4376234331907441759
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +253,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 570468212236981971}
-  - component: {fileID: 4617495551415032062}
   m_Layer: 6
   m_Name: Leg1
   m_TagString: Untagged
@@ -299,27 +280,6 @@ Transform:
   - {fileID: 146977816711360485}
   m_Father: {fileID: 6212391282677697954}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4617495551415032062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4376234331907441759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9d307a3c113139438d4e52b95fbcd39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  joints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  target: {x: 0, y: 0, z: 0}
-  pole: {fileID: 0}
-  keepAnchorPosition: 1
-  totalBoneLength: 0
-  epsilonForTarget: 0.1
 --- !u!1 &4935325011079091550
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,7 +347,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 90.6
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -427,7 +387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2262892891029279230}
   rotationLimits: {x: -90, y: 90}
-  offset: {x: 2, y: 0, z: -1.5}
+  offset: {x: 2, y: 1, z: -1.5}
 --- !u!1 &5864549000358890912
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,7 +451,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bedc2ce8ed5c7144b936a0cde7470967, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -612,7 +572,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bedc2ce8ed5c7144b936a0cde7470967, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -720,7 +680,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bedc2ce8ed5c7144b936a0cde7470967, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -841,7 +801,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bedc2ce8ed5c7144b936a0cde7470967, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -946,7 +906,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bedc2ce8ed5c7144b936a0cde7470967, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1051,7 +1011,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bedc2ce8ed5c7144b936a0cde7470967, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1209,8 +1169,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2842792535875324584, guid: a98c478808be8ec4285b7c02cd28d5ff, type: 3}
+  - {fileID: 8081414667790739604, guid: b308d77bb01c1f646b6032d3eb217c6d, type: 3}
   weaponPosition: {fileID: 5781983027398923007}
   selectedWeapon: 0
 --- !u!114 &927618895108895217
@@ -1291,7 +1251,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bedc2ce8ed5c7144b936a0cde7470967, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

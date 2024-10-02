@@ -1,62 +1,65 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
 
-public class RollingCubeEnemy : Enemy
+namespace Enemies
 {
-    private Rigidbody _rb;
-    [FormerlySerializedAs("_toppleForce")] public float toppleForce = 2.1f;
-    private bool _isToppling = false;
-    [FormerlySerializedAs("next_step_after_s")] public float nextStepAfterS = 0.7f;
-    private void Awake()
+    public class RollingCubeEnemy : Enemy
     {
-        _rb = GetComponent<Rigidbody>();
-    }
-
-    public override void LookAtPlayer()
-    {
-    }
-
-    public override void Move()
-    {
-        if (!_isToppling)
+        private Rigidbody _rb;
+        [FormerlySerializedAs("_toppleForce")] public float toppleForce = 2.1f;
+        private bool _isToppling = false;
+        [FormerlySerializedAs("next_step_after_s")] public float nextStepAfterS = 0.7f;
+        private void Awake()
         {
-            Vector3 direction = Vector3.zero;   
-            float absX = Mathf.Abs(Velocity.x);
-            float absZ = Mathf.Abs(Velocity.z);
-            float maxComponent = Mathf.Max(absX, absZ);
+            _rb = GetComponent<Rigidbody>();
+        }
 
-            if (maxComponent == absZ)
+        public override void LookAtPlayer()
+        {
+        }
+
+        public override void Move()
+        {
+            if (!_isToppling)
             {
-                direction = Velocity.z > 0 ? Vector3.forward : Vector3.back;
-            }
-            else if (maxComponent == absX)
-            {
-                direction = Velocity.x > 0 ? Vector3.right : Vector3.left;
-            }
+                Vector3 direction = Vector3.zero;   
+                float absX = Mathf.Abs(Velocity.x);
+                float absZ = Mathf.Abs(Velocity.z);
+                float maxComponent = Mathf.Max(absX, absZ);
 
-            if (direction != Vector3.zero)
-            {
-                Topple(direction);
-            }
-        } 
-    }
-    public override void Attack()
-    {
-    }
-    void Topple(Vector3 direction)
-    {
-        _isToppling = true;
-        _rb.AddForceAtPosition(direction * toppleForce, transform.position + Vector3.up * 0.5f, ForceMode.Impulse);
-        Invoke("ResetTopple", nextStepAfterS);
-    }
-    public override void TargetPlayer()
-    {
-        Velocity = (Player.transform.position - transform.position).normalized;
-    }
+                if (maxComponent == absZ)
+                {
+                    direction = Velocity.z > 0 ? Vector3.forward : Vector3.back;
+                }
+                else if (maxComponent == absX)
+                {
+                    direction = Velocity.x > 0 ? Vector3.right : Vector3.left;
+                }
 
-    void ResetTopple()
-    {
-        _isToppling = false;
-    }
+                if (direction != Vector3.zero)
+                {
+                    Topple(direction);
+                }
+            } 
+        }
+        public override void Attack()
+        {
+        }
+        void Topple(Vector3 direction)
+        {
+            _isToppling = true;
+            _rb.AddForceAtPosition(direction * toppleForce, transform.position + Vector3.up * 0.5f, ForceMode.Impulse);
+            Invoke("ResetTopple", nextStepAfterS);
+        }
+        public override void TargetPlayer()
+        {
+            Velocity = (Player.transform.position - transform.position).normalized;
+        }
 
+        void ResetTopple()
+        {
+            _isToppling = false;
+        }
+
+    }
 }

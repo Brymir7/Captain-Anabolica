@@ -31,6 +31,7 @@ implement grenade launcher, add VFX
 https://www.youtube.com/watch?v=adgeiUNlajY
 
 implement levelling system, pick up grenade launcher
+respect forward momentum in grenade launcher spawning of children
 
 if enemy hits player, move object right into the players face like a jump scare
 implement actual special things about spider, skeleton -> skeleton falls apart but will still move, spider can have short sprints?
@@ -38,3 +39,5 @@ implement actual special things about spider, skeleton -> skeleton falls apart b
 implement horse, implement mob combination -> skeelton on horse, skeleton on spider (will inherit the behavior of the spider, use better composition for for this)
 implement goblin (heavy hitter), implement zombie (will be invulnerable then respawn once)
 implement bipedal mob which just jumps -> goblin?
+
+

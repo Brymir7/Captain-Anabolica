@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class Launcher : WeaponBase
+namespace Player.Weapons
 {
-    protected override void InitializeProjectile(GameObject projectile, Vector3 direction)
+    public class Launcher : WeaponBase
     {
-        var bulletComponent = projectile.GetComponent<LauncherBullet>();
-        bulletComponent.SetDirection(direction);
+        protected override void PostInitiationCallback(GameObject projectile, Vector3 direction)
+        {
+            var bulletComponent = projectile.GetComponent<LauncherBullet>();
+            bulletComponent.SetDirection(direction); 
+        }
     }
 }

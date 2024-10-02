@@ -165,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0.5
   projectilePrefab: {fileID: 329420646280659486, guid: 38d85b73c7c77eb4694104b2251696bf, type: 3}
+  onShootVFX: {fileID: 3611098535630435875, guid: a1f4a7968814cfc4fa87def7412e2936, type: 3}
 --- !u!1 &4297267301855505501
 GameObject:
   m_ObjectHideFlags: 0

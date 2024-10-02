@@ -1,19 +1,22 @@
-public class SkeletonEnemy : Enemy
+namespace Enemies
 {
-    private BipedalIK _bipedal;
-
-    public void Start()
+    public class SkeletonEnemy : Enemy
     {
-        _bipedal = GetComponent<BipedalIK>();
-    }
+        private BipedalIK _bipedal;
 
-    public override void Attack()
-    {
-    }
+        public void Start()
+        {
+            _bipedal = GetComponent<BipedalIK>();
+        }
 
-    public override void Move()
-    {
-        transform.position += Velocity;
-        _bipedal.SetVelocity(Velocity);
+        public override void Attack()
+        {
+        }
+
+        public override void Move()
+        {
+            transform.position += Velocity;
+            _bipedal.SetVelocity(Velocity);
+        }
     }
 }

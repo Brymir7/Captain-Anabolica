@@ -1,6 +1,9 @@
-﻿public enum EnemyType
+﻿namespace Enemies
 {
-    Skeleton,
-    Worm,
-    Spider,
+    public enum EnemyType
+    {
+        Skeleton,
+        Worm,
+        Spider,
+    }
 }

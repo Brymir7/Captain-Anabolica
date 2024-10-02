@@ -1,10 +1,11 @@
-using UnityEngine;
-
-public class SpiderEnemy : Enemy
+namespace Enemies
 {
-    public override void Attack()
+    public class SpiderEnemy : Enemy
     {
-    }
+        public override void Attack()
+        {
+        }
     
 
+    }
 }

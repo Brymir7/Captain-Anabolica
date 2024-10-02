@@ -22,6 +22,7 @@ namespace Enemies
         [SerializeField] private int maxEnemies = 50;
 
         private float _nextSpawnTime;
+        public GameObject xpOrbPrefab;
         public float difficultyModifier = 1f;
         public List<Enemy> activeEnemies = new List<Enemy>();
         private readonly List<Transform> _enemyTransforms = new List<Transform>();
@@ -76,6 +77,7 @@ namespace Enemies
 
             enemyComponent.transform.parent = transform;
             enemyComponent.OnEnemyDeath += HandleEnemyDeath;
+            enemyComponent.SetXP(GetRandomXpValue(spawnInfo.enemyType), xpOrbPrefab);
             activeEnemies.Add(enemyComponent);
             _enemyTransforms.Add(enemyObject.transform);
             _activeEnemyObjects.Add(enemyObject);
@@ -86,6 +88,22 @@ namespace Enemies
             float totalWeight = enemySpawnInfos.Sum(info => info.spawnWeight);
             float randomValue = Random.Range(0f, totalWeight);
             return enemySpawnInfos.FirstOrDefault(info => (randomValue -= info.spawnWeight) < 0);
+        }
+
+        private static int GetRandomXpValue(EnemyType eType)
+        {
+            switch (eType)
+            {
+                case EnemyType.Skeleton:
+                    return Random.Range(8, 15);
+                case EnemyType.Spider:
+                    return Random.Range(10, 15);
+                case EnemyType.Worm:
+                    return Random.Range(25, 30);
+                default:
+                    Debug.Log("Invalid E type for XP Value");
+                    return 10;
+            }
         }
 
         private Vector3 GetRandomSpawnPosition(EnemySpawnInfo spawnInfo)
@@ -105,7 +123,7 @@ namespace Enemies
                 case EnemyType.Spider:
                     spawnPosition.y = 2f;
                     break;
-            } 
+            }
 
             return spawnPosition;
         }
