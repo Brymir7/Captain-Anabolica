@@ -5,7 +5,8 @@ namespace Player.Weapons
 {
     class LauncherBullet : ProjectileBase
     {
-        [SerializeField] private int children = 1; // Initial health of the bullet
+        [SerializeField] private int recursiveChildren ; // Initial health of the bullet
+        [SerializeField] private int amountOfChildrenPerRecursion;
         [SerializeField] private GameObject bulletPrefab; // Prefab for spawning new bullets
         [SerializeField] private GameObject miniExplosionVFX; // Prefab for mini explosion effect
         [SerializeField] private float childrenRelativeSpeed;
@@ -15,7 +16,7 @@ namespace Player.Weapons
             if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Ground"))
             {
                 SpawnMiniExplosion();
-                SpawnChildBullet(collision);
+                SpawnChildBullets(collision);
                 Destroy(gameObject);
             }
         }
@@ -28,20 +29,29 @@ namespace Player.Weapons
             }
         }
 
-        private void SpawnChildBullet(Collision collision)
+        public float scatterForce = 10f;
+        public float scatterRadius = 2f;
+
+        private void SpawnChildBullets(Collision collision)
         {
-            if (children >= 1 && bulletPrefab != null)
+            if (recursiveChildren >= 1 && bulletPrefab != null)
             {
-                Vector3 reflection = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
-                Quaternion newRotation = Quaternion.LookRotation(reflection);
-                GameObject newBullet = Instantiate(bulletPrefab, transform.position, newRotation);
-                LauncherBullet childBullet = newBullet.GetComponent<LauncherBullet>();
-                childBullet.SetDirection(reflection + childBullet.transform.up);
-                childBullet.SetSpeed(speed * childrenRelativeSpeed);
-                childBullet.DisableProjectile();
-                Invoke("EnableProjectile", Time.deltaTime);
-                Assert.IsTrue(childBullet);
-                childBullet.children = children - 1;
+
+                for (int i = 0; i < amountOfChildrenPerRecursion; i++)
+                {
+
+                    Vector3 randomDir = Random.insideUnitSphere;
+                    randomDir.y = Mathf.Abs(randomDir.y); // Ensure upward direction
+                    randomDir = Vector3.Slerp(Vector3.up, randomDir.normalized, Random.Range(0f, 0.5f));
+                    Vector3 spawnPos = transform.position + Random.insideUnitSphere * scatterRadius;
+                    GameObject newBullet = Instantiate(bulletPrefab, spawnPos, Quaternion.LookRotation(randomDir));
+                    Rigidbody childRb = newBullet.GetComponent<Rigidbody>();
+                    childRb.AddForce(randomDir * scatterForce, ForceMode.Impulse);
+                    LauncherBullet childBullet = newBullet.GetComponent<LauncherBullet>();
+                    childBullet.recursiveChildren = recursiveChildren - 1;
+                    childBullet.speed = speed * childrenRelativeSpeed;
+                    Destroy(newBullet, 5f);
+                }
             }
         }
     }

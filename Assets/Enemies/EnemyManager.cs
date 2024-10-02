@@ -18,7 +18,7 @@ namespace Enemies
             public float minSpawnDistance = 10f;
             public float maxSpawnDistance = 20f;
         }
-    
+
         [SerializeField] private List<EnemySpawnInfo> enemySpawnInfos;
         [SerializeField] private float baseSpawnInterval;
         [SerializeField] private int baseMaxEnemies;
@@ -74,7 +74,8 @@ namespace Enemies
                 case EnemyType.Worm:
                     var worm = enemyObject.GetComponent<WormEnemy>();
                     var amountOfSegments = Random.Range(5, 12);
-                    Assert.IsTrue(amountOfSegments < 12, "IF AMOUNT OF SEGMENTS > 12 TARGETTING OF WORM BREAKS; DUE TO IT NOT CORRECTLY ADJUSTING BASED ON WORM TILE HEIGHT");
+                    Assert.IsTrue(amountOfSegments < 12,
+                        "IF AMOUNT OF SEGMENTS > 12 TARGETTING OF WORM BREAKS; DUE TO IT NOT CORRECTLY ADJUSTING BASED ON WORM TILE HEIGHT");
                     worm.amountOfSegments = amountOfSegments;
                     enemyComponent.SetHealth(amountOfSegments);
                     enemyComponent.transform.localScale = Vector3.one * worm.amountOfSegments;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 namespace Player.Weapons
 {
@@ -16,7 +17,7 @@ namespace Player.Weapons
     {
         private bool _isTransitioning;
         private bool _isHolding;
-        public List<GameObject> weapons;
+        [FormerlySerializedAs("weapons")] public List<GameObject> weaponsPrefabs;
         public Transform weaponPosition;
         private Pistol _pistol;
         private Launcher _launcher;
@@ -24,6 +25,20 @@ namespace Player.Weapons
         public WeaponType selectedWeapon = WeaponType.Pistol;
         private Dictionary<WeaponType, GameObject> _weaponInstances = new Dictionary<WeaponType, GameObject>();
         private GameObject _currentWeapon;
+
+        public float[] GetWeaponCooldowns()
+        {
+            var cooldowns = new float[weaponsPrefabs.Count];
+            for (int i = 0; i < weaponsPrefabs.Count; i++)
+            {
+                WeaponType weaponType = (WeaponType)i;
+                if (HasUnlockedWeapon(weaponType) == false) return cooldowns;
+                var weapon = _weaponInstances[weaponType].GetComponent<WeaponBase>();
+                cooldowns[i] = weapon.GetTimeTillNextShot();
+            }
+
+            return cooldowns;
+        }
 
         private bool HasUnlockedWeapon(WeaponType weapon)
         {
@@ -63,7 +78,7 @@ namespace Player.Weapons
 
         private void InitializeWeapon(WeaponType weaponType)
         {
-            var weaponInfo = weapons[(int)weaponType];
+            var weaponInfo = weaponsPrefabs[(int)weaponType];
             var weaponInstance = Instantiate(weaponInfo, weaponPosition.position, weaponPosition.rotation);
             weaponInstance.transform.localScale = Vector3.one * 3.0f;
             _weaponInstances[weaponType] = weaponInstance;
@@ -91,7 +106,6 @@ namespace Player.Weapons
         public void SwitchWeapon()
         {
             _currentWeapon.SetActive(false);
-
             selectedWeapon++;
             if ((int)selectedWeapon >= System.Enum.GetValues(typeof(WeaponType)).Length)
             {

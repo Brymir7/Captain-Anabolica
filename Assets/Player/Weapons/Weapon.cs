@@ -44,5 +44,10 @@ namespace Player.Weapons
         }
 
         protected abstract void PostInitiationCallback(GameObject projectile, Vector3 direction);
+
+        public float GetTimeTillNextShot()
+        {
+            return Mathf.Min(cooldown - Time.time - LastShotTime, 0.0f);
+        }
     }
 }

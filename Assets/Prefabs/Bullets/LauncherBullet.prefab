@@ -101,10 +101,13 @@ MonoBehaviour:
   damage: 1
   lifetime: 0
   maxDistance: 100
-  children: 1
+  recursiveChildren: 1
+  amountOfChildrenPerRecursion: 3
   bulletPrefab: {fileID: 329420646280659486}
   miniExplosionVFX: {fileID: 7013323296447545863, guid: 9b54392309320a4479c84a3abdae3267, type: 3}
-  childrenRelativeSpeed: 0.2
+  childrenRelativeSpeed: 0.4
+  scatterForce: 10
+  scatterRadius: 2
 --- !u!1 &972316709693650545
 GameObject:
   m_ObjectHideFlags: 0
