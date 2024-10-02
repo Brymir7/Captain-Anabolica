@@ -27,11 +27,14 @@ how to make it look good?
 
 
 
-implement grenade launcher, add VFX
-https://www.youtube.com/watch?v=adgeiUNlajY
+// implement grenade launcher, add VFX
+// https://www.youtube.com/watch?v=adgeiUNlajY
+
+
+// respect forward momentum in grenade launcher spawning of children
 
 implement levelling system, pick up grenade launcher
-respect forward momentum in grenade launcher spawning of children
+implement health bars for enemies, player
 
 if enemy hits player, move object right into the players face like a jump scare
 implement actual special things about spider, skeleton -> skeleton falls apart but will still move, spider can have short sprints?
@@ -40,5 +43,6 @@ implement horse make it abstract will be reused a lot, implement mob combination
 implement goblin (heavy hitter), implement zombie (will be invulnerable then respawn once)
 implement bipedal mob which just jumps -> goblin?
 add ghosts
-make hydra, make medusa
+
+make hydra, make medusa, make big worm (first enemy), these will have actual attack patterns that u have to dodge, add dodge as baseline mobility
 ^-make them bosses-^
