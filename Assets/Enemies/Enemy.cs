@@ -150,7 +150,7 @@ namespace Enemies
             if (other.CompareTag("Bullet"))
             {
                 var bullet = other.GetComponent<ProjectileBase>();
-                if (!bullet.IsAlive()) return;
+                if (!bullet.IsEnabled()) return;
                 bullet.DestroyProjectile();
                 BulletOnTriggerEnterCallback(other, bullet);
             }
@@ -162,7 +162,7 @@ namespace Enemies
             if (obj.CompareTag("Bullet"))
             {
                 var bullet = obj.GetComponent<ProjectileBase>();
-                if (!bullet.IsAlive()) return;
+                if (!bullet.IsEnabled()) return;
                 bullet.DestroyProjectile();
                 BulletOnCollisionEnterCallback(collision, bullet);
             }

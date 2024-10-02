@@ -23,7 +23,7 @@ namespace Player.Weapons
             Collid = GetComponent<Collider>();
         }
 
-        public bool IsAlive()
+        public bool IsEnabled()
         {
             return _isEnabled;
         }
@@ -81,11 +81,6 @@ namespace Player.Weapons
         public void EnableProjectile()
         {
             _isEnabled = true;
-        }
-
-        public void ToggleCollider()
-        {
-            Collid.enabled = !Collid.enabled;
         }
 
         public int GetDamage()

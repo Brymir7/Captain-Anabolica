@@ -9,7 +9,7 @@ public class PlayerStateSummary : MonoBehaviour
     [SerializeField] private int health;
     private int _maxHealth;
     private float[] _weaponCooldowns = new float[8];
-
+    
     public int GetHealth()
     {
         return health;
