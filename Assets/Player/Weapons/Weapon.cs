@@ -47,7 +47,7 @@ namespace Player.Weapons
 
         public float GetTimeTillNextShot()
         {
-            return Mathf.Min(cooldown - Time.time - LastShotTime, 0.0f);
+            return Mathf.Max(cooldown - Time.time - LastShotTime, 0.0f);
         }
     }
 }

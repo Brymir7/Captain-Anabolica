@@ -16,7 +16,7 @@ namespace Player.Weapons
             if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Ground"))
             {
                 SpawnMiniExplosion();
-                if (IsEnabled())
+                if (IsEnabled()) // enable to kill worm quickly as an upgrade??
                 {
                     SpawnChildBullets(collision);
                 }

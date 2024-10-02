@@ -26,23 +26,26 @@ namespace Player.Weapons
         private Dictionary<WeaponType, GameObject> _weaponInstances = new Dictionary<WeaponType, GameObject>();
         private GameObject _currentWeapon;
 
-        public float[] GetWeaponCooldowns()
+        public void FillWeaponCooldowns(float[] cooldowns)
         {
-            var cooldowns = new float[weaponsPrefabs.Count];
             for (int i = 0; i < weaponsPrefabs.Count; i++)
             {
                 WeaponType weaponType = (WeaponType)i;
-                if (HasUnlockedWeapon(weaponType) == false) return cooldowns;
+
+                if (HasUnlockedWeapon(weaponType) == false)
+                {
+                    cooldowns[i] = -1f;
+                    continue;
+                }
+
                 var weapon = _weaponInstances[weaponType].GetComponent<WeaponBase>();
                 cooldowns[i] = weapon.GetTimeTillNextShot();
             }
-
-            return cooldowns;
         }
 
-        private bool HasUnlockedWeapon(WeaponType weapon)
+        public bool HasUnlockedWeapon(WeaponType weapon)
         {
-            return (_hasUnlockedWeapons & (1 << (int)weapon)) != 0;
+            return (_hasUnlockedWeapons & (1 << (int)weapon)) > 0;
         }
 
         public void UnlockWeapon(WeaponType weapon)
@@ -50,6 +53,7 @@ namespace Player.Weapons
             Assert.IsTrue((int)weapon < 7);
             var newUnlock = (1 << (int)weapon) | _hasUnlockedWeapons;
             _hasUnlockedWeapons = (byte)newUnlock;
+            print(_hasUnlockedWeapons);
         }
 
         private void Start()
@@ -105,6 +109,11 @@ namespace Player.Weapons
 
         public void SwitchWeapon()
         {
+            if (!HasUnlockedWeapon(selectedWeapon++))
+            {
+                return;
+            }
+
             _currentWeapon.SetActive(false);
             selectedWeapon++;
             if ((int)selectedWeapon >= System.Enum.GetValues(typeof(WeaponType)).Length)
@@ -117,6 +126,11 @@ namespace Player.Weapons
 
         public void SwitchToWeapon(WeaponType wType)
         {
+            if (!HasUnlockedWeapon(wType))
+            {
+                return;
+            }
+
             _currentWeapon.SetActive(false);
             selectedWeapon = wType;
             SetWeaponInHand(wType);
