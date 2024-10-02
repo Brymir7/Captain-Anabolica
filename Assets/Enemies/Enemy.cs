@@ -5,15 +5,16 @@ public abstract class Enemy : MonoBehaviour
     protected EnemyType EnemyType;
     protected int Health;
     protected float MoveSpeed;
-    public Vector3 velocity;
+    protected Vector3 Velocity;
     protected Transform Player;
+    [SerializeField] protected GameObject onHitVFX;
 
     public virtual void Initialize(EnemyType type)
     {
         EnemyType = type;
         Health = 1;
         MoveSpeed = 0.05f;
-        velocity = Vector3.zero;
+        Velocity = Vector3.zero;
         Player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -29,12 +30,12 @@ public abstract class Enemy : MonoBehaviour
 
     public virtual void Move()
     {
-        transform.position += velocity;
+        transform.position += Velocity;
     }
 
     public virtual void TargetPlayer()
     {
-        velocity = transform.forward * MoveSpeed;
+        Velocity = transform.forward * MoveSpeed;
     }
 
     public virtual void LookAtPlayer()
@@ -76,12 +77,26 @@ public abstract class Enemy : MonoBehaviour
         Move();
     }
 
+    protected virtual void BulletOnTriggerEnterCallback(Collider other)
+    {
+        ProjectileBase bullet = other.GetComponent<ProjectileBase>();
+        TakeDamage(bullet.GetDamage());
+        Instantiate(onHitVFX, other.transform.position, Quaternion.identity);
+    }
+
+    protected virtual void BulletOnCollisionEnterCallback(Collision collision)
+    {
+        var obj = collision.gameObject;
+        ProjectileBase bullet = obj.GetComponent<ProjectileBase>();
+        TakeDamage(bullet.GetDamage());
+        Instantiate(onHitVFX, obj.transform.position, Quaternion.identity);
+    }
+
     protected void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Bullet")
+        if (other.CompareTag("Bullet"))
         {
-            ProjectileBase bullet = other.GetComponent<ProjectileBase>();
-            TakeDamage(bullet.GetDamage());
+            BulletOnTriggerEnterCallback(other);
             Destroy(other.gameObject);
         }
     }
@@ -91,8 +106,7 @@ public abstract class Enemy : MonoBehaviour
         var obj = collision.gameObject;
         if (obj.CompareTag("Bullet"))
         {
-            ProjectileBase bullet = obj.GetComponent<ProjectileBase>();
-            TakeDamage(bullet.GetDamage());
+            BulletOnCollisionEnterCallback(collision);
             Destroy(obj);
         }
     }

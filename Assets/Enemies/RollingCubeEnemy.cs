@@ -21,17 +21,17 @@ public class RollingCubeEnemy : Enemy
         if (!_isToppling)
         {
             Vector3 direction = Vector3.zero;   
-            float absX = Mathf.Abs(velocity.x);
-            float absZ = Mathf.Abs(velocity.z);
+            float absX = Mathf.Abs(Velocity.x);
+            float absZ = Mathf.Abs(Velocity.z);
             float maxComponent = Mathf.Max(absX, absZ);
 
             if (maxComponent == absZ)
             {
-                direction = velocity.z > 0 ? Vector3.forward : Vector3.back;
+                direction = Velocity.z > 0 ? Vector3.forward : Vector3.back;
             }
             else if (maxComponent == absX)
             {
-                direction = velocity.x > 0 ? Vector3.right : Vector3.left;
+                direction = Velocity.x > 0 ? Vector3.right : Vector3.left;
             }
 
             if (direction != Vector3.zero)
@@ -51,7 +51,7 @@ public class RollingCubeEnemy : Enemy
     }
     public override void TargetPlayer()
     {
-        velocity = (Player.transform.position - transform.position).normalized;
+        Velocity = (Player.transform.position - transform.position).normalized;
     }
 
     void ResetTopple()

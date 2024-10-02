@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 8753434687860246814}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.91, y: 2.56, z: 2.814}
+  m_LocalPosition: {x: -2.91, y: 7.37, z: 2.814}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2cfc06e0ab4324dbb9108b28701d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0, z: 0}
+  onHitVFX: {fileID: 8243798984752376232, guid: 052e1949103a9f44f8a2b7545f8af880, type: 3}
   amountOfSegments: 24
   jointPrefab: {fileID: 7662906744246652632, guid: fe0637d229050b64c80fb0ea1b3f2bee, type: 3}
   connectorPrefab: {fileID: 7586978389177234526, guid: 0c891e7f51aafd14ba79bfd5e29458e8, type: 3}

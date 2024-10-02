@@ -94,7 +94,19 @@ namespace Enemies
             float distance = Random.Range(spawnInfo.minSpawnDistance, spawnInfo.maxSpawnDistance);
 
             Vector3 spawnPosition = Quaternion.Euler(0f, angle, 0f) * Vector3.forward * distance;
-            spawnPosition.y = 0.7f;
+            switch (spawnInfo.enemyType)
+            {
+                case EnemyType.Worm:
+                    spawnPosition.y = 2f;
+                    break;
+                case EnemyType.Skeleton:
+                    spawnPosition.y = 0.7f;
+                    break;
+                case EnemyType.Spider:
+                    spawnPosition.y = 2f;
+                    break;
+            } 
+
             return spawnPosition;
         }
     }

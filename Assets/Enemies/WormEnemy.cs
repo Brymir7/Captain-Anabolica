@@ -18,8 +18,8 @@ public class WormEnemy : Enemy
 
     public override void TargetPlayer()
     {
-        velocity = (Player.transform.position - _ik.target).normalized;
-        velocity.y = 0;
+        Velocity = (Player.transform.position - _ik.target).normalized;
+        Velocity.y = 0;
     }
 
     public override void LookAtPlayer()
@@ -28,7 +28,7 @@ public class WormEnemy : Enemy
 
     public override void Move()
     {
-        _ik.target += velocity * MoveSpeed;
+        _ik.target += Velocity * MoveSpeed;
     }
 
     void Start()
@@ -75,29 +75,37 @@ public class WormEnemy : Enemy
         _ik.Awake();
     }
 
-    new void OnTriggerEnter(Collider other)
+    protected override void BulletOnTriggerEnterCallback(Collider other)
     {
-        if (other.tag == "Bullet")
+        ProjectileBase bullet = other.GetComponent<ProjectileBase>();
+        HandleBulletInteraction(bullet);
+        Instantiate(onHitVFX, other.transform.position, Quaternion.identity);
+    }
+
+    protected override void BulletOnCollisionEnterCallback(Collision collision)
+    {
+        ProjectileBase bullet = collision.gameObject.GetComponent<ProjectileBase>();
+        HandleBulletInteraction(bullet);
+        Instantiate(onHitVFX, collision.contacts[0].point, Quaternion.identity);
+    }
+
+    private void HandleBulletInteraction(ProjectileBase bullet)
+    {
+        var jointToRemove = _joints[_joints.Count - 1];
+        var connectorToRemove = _connectors[_connectors.Count - 1];
+        var dmg = bullet.GetDamage();
+        _joints.Remove(jointToRemove);
+        _connectors.Remove(connectorToRemove);
+        Destroy(jointToRemove);
+        Destroy(connectorToRemove);
+
+        amountOfSegments -= dmg;
+        if (amountOfSegments <= 1)
         {
-            ProjectileBase bullet = other.GetComponent<ProjectileBase>();
-            var jointToRemove = _joints[_joints.Count - 1];
-            var connectorToRemove = _connectors[_connectors.Count - 1];
-            var dmg = bullet.GetDamage();
-            Destroy(other.gameObject);
-            _joints.Remove(jointToRemove);
-            _connectors.Remove(connectorToRemove);
-            Destroy(jointToRemove);
-            Destroy(connectorToRemove);
-
-            amountOfSegments -= dmg;
-
-            if (amountOfSegments <= 1)
-            {
-                dmg += 1;
-            }
-
-            _ik.RemoveLastJoint();
-            TakeDamage(dmg);
+            dmg += 1;
         }
+
+        _ik.RemoveLastJoint();
+        TakeDamage(dmg);
     }
 }

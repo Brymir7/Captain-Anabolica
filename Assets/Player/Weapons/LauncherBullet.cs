@@ -28,7 +28,7 @@ class LauncherBullet : ProjectileBase
 
     private void SpawnChildBullet(Collision collision)
     {
-        if (children > 1 && bulletPrefab != null)
+        if (children >= 1 && bulletPrefab != null)
         {
             Vector3 reflection = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
             Quaternion newRotation = Quaternion.LookRotation(reflection);

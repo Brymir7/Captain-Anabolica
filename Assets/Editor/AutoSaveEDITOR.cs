@@ -4,9 +4,9 @@ using UnityEngine;
 
 [InitializeOnLoad]
 
-public class AutoSaveEDITOR
+public class AutoSaveEditor
 {
-    static AutoSaveEDITOR()
+    static AutoSaveEditor()
     {
         EditorApplication.playModeStateChanged += SaveOnPlay;
     }

@@ -13,7 +13,7 @@ public class SkeletonEnemy : Enemy
 
     public override void Move()
     {
-        transform.position += velocity;
-        _bipedal.SetVelocity(velocity);
+        transform.position += Velocity;
+        _bipedal.SetVelocity(Velocity);
     }
 }
