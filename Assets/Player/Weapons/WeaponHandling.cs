@@ -12,6 +12,13 @@ namespace Player.Weapons
         GrenadeLauncher = 1
     }
 
+    [System.Serializable]
+    public enum UpgradeType
+    {
+        Damage = 0,
+        ReloadSpeed = 1,
+        SpecialAbility = 2,
+    }
 
     public class WeaponHandling : MonoBehaviour
     {
@@ -54,6 +61,11 @@ namespace Player.Weapons
             var newUnlock = (1 << (int)weapon) | _hasUnlockedWeapons;
             _hasUnlockedWeapons = (byte)newUnlock;
             print(_hasUnlockedWeapons);
+        }
+
+        public void UpgradeWeapon(WeaponType weapon, UpgradeType upgrade)
+        {
+            print("upgrading weapon with " + weapon + " to " + upgrade);
         }
 
         private void Start()
@@ -109,18 +121,15 @@ namespace Player.Weapons
 
         public void SwitchWeapon()
         {
-            if (!HasUnlockedWeapon(selectedWeapon++))
+            var new_w_int = ((int)selectedWeapon + 1) % System.Enum.GetValues(typeof(WeaponType)).Length;
+            var new_w = (WeaponType)new_w_int;
+            if (!HasUnlockedWeapon(new_w))
             {
                 return;
             }
 
             _currentWeapon.SetActive(false);
-            selectedWeapon++;
-            if ((int)selectedWeapon >= System.Enum.GetValues(typeof(WeaponType)).Length)
-            {
-                selectedWeapon = WeaponType.Pistol;
-            }
-
+            selectedWeapon = new_w;
             SetWeaponInHand(selectedWeapon);
         }
 

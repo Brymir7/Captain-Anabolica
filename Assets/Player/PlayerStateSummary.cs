@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using Player.Weapons;
 using UnityEngine;
 
 public class PlayerStateSummary : MonoBehaviour
 {
     [SerializeField] private WeaponHandling weaponHandling;
+    [SerializeField] private PlayerXp playerXp;
     [SerializeField] private int health;
     private int _maxHealth;
     private float[] _weaponCooldowns = new float[8];
@@ -25,6 +27,11 @@ public class PlayerStateSummary : MonoBehaviour
         return health;
     }
 
+    public float GetXpProgress()
+    {
+        return playerXp.GetCurrentXP() / (float)playerXp.GetXpRequirementForNextLevel();
+    }
+
     public int GetMaxHealth()
     {
         return _maxHealth;
@@ -33,19 +40,17 @@ public class PlayerStateSummary : MonoBehaviour
     public float[] GetWeaponCooldowns()
     {
         return _weaponCooldowns;
-}
+    }
 
     void Start()
     {
         _maxHealth = health;
         InitializeWeaponUnlockStatuses();
-
     }
 
     void Update()
     {
         weaponHandling.FillWeaponCooldowns(_weaponCooldowns);
-        print(_weaponCooldowns[0]);
     }
 
     private void InitializeWeaponUnlockStatuses()
@@ -58,5 +63,4 @@ public class PlayerStateSummary : MonoBehaviour
             }
         }
     }
-
 }

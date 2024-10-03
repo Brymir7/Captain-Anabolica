@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerXpAttractor : MonoBehaviour
+    public class PlayerSurroundingChecks : MonoBehaviour
     {
         [SerializeField] private float attractionRadius = 5f;
         [SerializeField] private LayerMask xpOrbLayer;
@@ -32,13 +32,6 @@ namespace Player
             for (int i = 0; i < _activeXpOrbs.Count; i++)
             {
                 _activeXpOrbs[i].StartAttraction(transform);
-            }
-
-
-            void OnDrawGizmosSelected()
-            {
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawWireSphere(transform.position, attractionRadius);
             }
         }
     }

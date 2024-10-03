@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Player.Weapons;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -19,42 +20,67 @@ namespace Enemies
             public float maxSpawnDistance = 20f;
         }
 
+        [System.Serializable]
+        public class WeaponSpawnInfo
+        {
+            public GameObject prefab;
+            public Vector3? SpawnPosition;
+        }
+
         [SerializeField] private List<EnemySpawnInfo> enemySpawnInfos;
         [SerializeField] private float baseSpawnInterval;
         [SerializeField] private int baseMaxEnemies;
         [SerializeField] private Transform plane;
         private float _nextSpawnTime;
         [SerializeField] private GameObject xpOrbPrefab;
-        private float difficultyModifier = 1f;
-        private List<Enemy> activeEnemies = new List<Enemy>();
+        private float _difficultyModifier = 1f;
+        private List<Enemy> _activeEnemies = new List<Enemy>();
         private readonly List<Transform> _enemyTransforms = new List<Transform>();
         private readonly List<GameObject> _activeEnemyObjects = new List<GameObject>();
+        private Queue<WeaponSpawnInfo> weaponSpawnQueue = new Queue<WeaponSpawnInfo>();
 
         public List<Transform> GetTransforms()
         {
             return _enemyTransforms;
         }
 
+        public void SpawnWeapon(WeaponSpawnInfo obj)
+        {
+            weaponSpawnQueue.Enqueue(obj);
+        }
+
         private void Update()
         {
-            float currentSpawnInterval = baseSpawnInterval / difficultyModifier;
-            float currentMaxEnemies = baseMaxEnemies * difficultyModifier;
-            if (Time.time >= _nextSpawnTime && activeEnemies.Count < baseMaxEnemies)
+            float currentSpawnInterval = baseSpawnInterval / _difficultyModifier;
+            float currentMaxEnemies = baseMaxEnemies * _difficultyModifier;
+            if (Time.time >= _nextSpawnTime && _activeEnemies.Count < baseMaxEnemies)
             {
                 SpawnEnemy();
                 _nextSpawnTime = Time.time + currentSpawnInterval;
             }
 
-            difficultyModifier += Time.deltaTime / 60;
+            _difficultyModifier += Time.deltaTime / 60;
         }
 
         private void HandleEnemyDeath(Enemy enemy)
         {
-            int index = activeEnemies.IndexOf(enemy);
+            int index = _activeEnemies.IndexOf(enemy);
             if (index >= 0)
             {
+                var xpOrb = Instantiate(xpOrbPrefab, enemy.GetFirstGroundBelow(), Quaternion.identity);
+                var xpOrbScript = xpOrb.GetComponent<XpOrb>();
+                xpOrbScript.xpAmount = 20; // TODO
+                if (weaponSpawnQueue.Count > 0)
+                {
+                    var weapon = weaponSpawnQueue.Dequeue();
+
+                    Instantiate(weapon.prefab,
+                        weapon.SpawnPosition.HasValue ? weapon.SpawnPosition.Value : enemy.GetFirstGroundBelow(),
+                        Quaternion.identity);
+                }
+
                 Destroy(_activeEnemyObjects[index]);
-                activeEnemies.RemoveAt(index);
+                _activeEnemies.RemoveAt(index);
                 _enemyTransforms.RemoveAt(index);
                 _activeEnemyObjects.RemoveAt(index);
             }
@@ -94,9 +120,7 @@ namespace Enemies
 
             enemyComponent.transform.parent = transform;
             enemyComponent.OnEnemyDeath += HandleEnemyDeath;
-
-            enemyComponent.SetXp(GetRandomXpValue(spawnInfo.enemyType), xpOrbPrefab);
-            activeEnemies.Add(enemyComponent);
+            _activeEnemies.Add(enemyComponent);
             _enemyTransforms.Add(enemyObject.transform);
             _activeEnemyObjects.Add(enemyObject);
         }

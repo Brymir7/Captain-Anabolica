@@ -9,23 +9,16 @@ namespace Enemies
 
         public int updateDirectionEveryFrames;
         public event EnemyDeathEventHandler OnEnemyDeath;
-        protected int currFrame;
+        protected int CurrFrame;
         protected EnemyType EnemyType;
         protected int Health;
 
         protected float MoveSpeed;
         protected Vector3 Velocity;
         protected Transform Player;
-        protected int XpOnKill;
+
         [SerializeField] protected GameObject onHitVFX;
         [SerializeField] protected GameObject onDeathVFX;
-        protected GameObject XpOrbPrefab;
-
-        public void SetXp(int xpValue, GameObject prefab)
-        {
-            XpOnKill = xpValue;
-            XpOrbPrefab = prefab;
-        }
 
         public virtual void Initialize(EnemyType type)
         {
@@ -67,15 +60,12 @@ namespace Enemies
 
         public virtual void TakeDamage(int damage)
         {
-            print("damage" + damage);
             Health -= damage;
-            print("health" + Health);
             if (Health <= 0)
             {
                 KillSelf();
             }
         }
-
 
         protected virtual void OnDirectionUpdate(Vector3 newDirection)
         {
@@ -83,20 +73,20 @@ namespace Enemies
 
         public void FixedUpdate()
         {
-            currFrame += 1;
-            if (currFrame >= updateDirectionEveryFrames)
+            CurrFrame += 1;
+            if (CurrFrame >= updateDirectionEveryFrames)
             {
                 SetForwardVecToPlayer();
                 OnDirectionUpdate(Velocity);
-                currFrame = 0;
+                CurrFrame = 0;
             }
 
             Move();
         }
 
-        protected Vector3 GetFirstGroundBelow()
+        public Vector3 GetFirstGroundBelow()
         {
-            Vector3 up = transform.position + Vector3.up * 2f;
+            Vector3 up = transform.position + Vector3.up * 5f;
             RaycastHit hit;
             int groundLayer = LayerMask.NameToLayer("Ground");
             int groundLayerMask = 1 << groundLayer;
@@ -139,10 +129,6 @@ namespace Enemies
             {
                 Instantiate(onDeathVFX, transform.position, Quaternion.identity);
             }
-
-            var xpOrb = Instantiate(XpOrbPrefab, GetFirstGroundBelow(), Quaternion.identity);
-            var xpOrbScript = xpOrb.GetComponent<XpOrb>();
-            xpOrbScript.xpAmount = XpOnKill;
         }
 
         protected void OnTriggerEnter(Collider other)

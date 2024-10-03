@@ -12,7 +12,7 @@ namespace Enemies
         public GameObject connectorPrefab;
         private List<GameObject> _joints = new List<GameObject>();
         private List<GameObject> _connectors = new List<GameObject>();
-        private bool reversedDirection = false;
+        private bool _reversedDirection = false;
         private IK _ik;
 
         public override void Attack()
@@ -38,7 +38,7 @@ namespace Enemies
             if (distTailToPlayer < distHeadToPlayer) // just use tail instead of head to move (smart worm)
             {
                 _ik.joints.Reverse();
-                reversedDirection = !reversedDirection;
+                _reversedDirection = !_reversedDirection;
                 _ik.target = _ik.joints[_ik.joints.Count - 1].position;
             }
         }
@@ -112,7 +112,7 @@ namespace Enemies
 
                 GameObject jointToRemove;
                 GameObject connectorToRemove;
-                if (reversedDirection)
+                if (_reversedDirection)
                 {
                     jointToRemove = _joints[0];
                     connectorToRemove = _connectors[0];

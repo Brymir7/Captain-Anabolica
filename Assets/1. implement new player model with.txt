@@ -46,3 +46,10 @@ add ghosts
 
 make hydra, make medusa, make big worm (first enemy), these will have actual attack patterns that u have to dodge, add dodge as baseline mobility
 ^-make them bosses-^
+
+
+
+
+implement pooling
+make game look good
+lee
