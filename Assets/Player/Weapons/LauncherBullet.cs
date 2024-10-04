@@ -5,10 +5,10 @@ namespace Player.Weapons
 {
     class LauncherBullet : ProjectileBase
     {
-        [SerializeField] private int recursiveChildren; // Initial health of the bullet
+        [SerializeField] private int recursiveChildren;
         [SerializeField] private int amountOfChildrenPerRecursion;
-        [SerializeField] private GameObject bulletPrefab; // Prefab for spawning new bullets
-        [SerializeField] private GameObject miniExplosionVFX; // Prefab for mini explosion effect
+        [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private GameObject miniExplosionVFX;
         [SerializeField] private float childrenRelativeSpeed;
 
         protected void OnCollisionEnter(Collision collision)
@@ -20,8 +20,19 @@ namespace Player.Weapons
                 {
                     SpawnChildBullets(collision);
                 }
+
                 Destroy(gameObject);
             }
+        }
+
+        public void AddChildrenToRecursion(int num)
+        {
+            amountOfChildrenPerRecursion += num;
+        }
+
+        public void AddRecursiveChildren(int num)
+        {
+            recursiveChildren += num;
         }
 
         private void SpawnMiniExplosion()

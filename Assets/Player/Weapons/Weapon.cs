@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Player.Weapons
 {
@@ -6,7 +7,7 @@ namespace Player.Weapons
     {
         [SerializeField] protected float cooldown = 1.0f;
         [SerializeField] protected GameObject projectilePrefab;
-
+        [SerializeField] protected int baseDamage = 1;
         protected float LastShotTime = 0.0f;
 
         //public virtual void SetProjectilePrefab(GameObject prefab)
@@ -18,6 +19,19 @@ namespace Player.Weapons
         {
             return Time.time - LastShotTime > cooldown;
         }
+
+        public void UpgradeDamage(int damage)
+        {
+            baseDamage += damage;
+        }
+
+        public virtual void UpgradeReloadSpeed(float multiplier)
+        {
+            Assert.IsTrue(multiplier < 1.0f, $"Multiplier {multiplier} is less than 1.0");
+            cooldown *= multiplier;
+        }
+
+        public abstract void UpgradeSpecialAbility();
 
         public virtual void Shoot(Camera playerCamera)
         {

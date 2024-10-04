@@ -29,7 +29,7 @@ public class PlayerStateSummary : MonoBehaviour
 
     public float GetXpProgress()
     {
-        return playerXp.GetCurrentXP() / (float)playerXp.GetXpRequirementForNextLevel();
+        return playerXp.GetCurrentXp() / (float)playerXp.GetXpRequirementForNextLevel();
     }
 
     public int GetMaxHealth()

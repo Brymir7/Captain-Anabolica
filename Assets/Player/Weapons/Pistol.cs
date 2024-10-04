@@ -10,7 +10,13 @@ namespace Player.Weapons
         {
             var bulletComponent = projectile.GetComponent<PistolBullet>();
             bulletComponent.SetDirection(direction);
+            bulletComponent.SetDamage(baseDamage);
             Instantiate(onShootVFX, transform.position + transform.forward * 0.2f, transform.rotation);
+        }
+
+        public override void UpgradeSpecialAbility()
+        {
+            print("didnt impelemnt to upgrade");
         }
     }
 }

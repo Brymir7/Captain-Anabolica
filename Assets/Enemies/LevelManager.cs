@@ -1,35 +1,33 @@
-using System;
 using System.Collections.Generic;
-using Enemies;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class LevelManager : MonoBehaviour
+namespace Enemies
 {
-    [SerializeField] private List<GameObject> weaponPrefabs;
-    [SerializeField] private List<int> levelsToSpawnWeapons;
-    [SerializeField] private EnemyManager _enemyManager;
-
-    public void OnPlayerLevelUp(int level)
+    public class LevelManager : MonoBehaviour
     {
-        CheckAndSpawnWeapons(level);
-    }
+        [SerializeField] private List<GameObject> weaponPrefabs;
+        [FormerlySerializedAs("_enemyManager")] [SerializeField] private EnemyManager enemyManager;
 
-    private void CheckAndSpawnWeapons(int level)
-    {
-        if (levelsToSpawnWeapons.Contains(level))
+        public void OnPlayerLevelUp(int level)
+        {
+            CheckAndSpawnWeapons(level);
+        }
+
+        private void CheckAndSpawnWeapons(int level)
         {
             SpawnWeapon();
         }
-    }
 
-    private void SpawnWeapon()
-    {
-        int randomIndex = Random.Range(0, weaponPrefabs.Count);
-        _enemyManager.SpawnWeapon(new EnemyManager.WeaponSpawnInfo
+        private void SpawnWeapon()
         {
-            prefab = weaponPrefabs[randomIndex],
-            SpawnPosition = null
-        });
+            int randomIndex = Random.Range(0, weaponPrefabs.Count);
+            enemyManager.SpawnWeapon(new EnemyManager.WeaponSpawnInfo
+            {
+                prefab = weaponPrefabs[randomIndex],
+                SpawnPosition = null
+            });
+        }
     }
 }

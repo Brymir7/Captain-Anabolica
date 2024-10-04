@@ -34,6 +34,8 @@ how to make it look good?
 // respect forward momentum in grenade launcher spawning of children
 
 implement levelling system, pick up grenade launcher
+implement weapon pick up and upgrade system
+
 implement health bars for enemies, player
 
 if enemy hits player, move object right into the players face like a jump scare
@@ -53,3 +55,7 @@ make hydra, make medusa, make big worm (first enemy), these will have actual att
 implement pooling
 make game look good
 lee
+
+
+
+https://www.techinterviewhandbook.org/grind75/?hours=7

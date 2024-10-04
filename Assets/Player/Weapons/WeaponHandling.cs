@@ -65,7 +65,46 @@ namespace Player.Weapons
 
         public void UpgradeWeapon(WeaponType weapon, UpgradeType upgrade)
         {
-            print("upgrading weapon with " + weapon + " to " + upgrade);
+            switch (weapon)
+            {
+                case WeaponType.Pistol:
+                    switch (upgrade)
+                    {
+                        case UpgradeType.Damage:
+                            _pistol.UpgradeDamage(1);
+                            break;
+                        case UpgradeType.ReloadSpeed:
+                            _pistol.UpgradeReloadSpeed(0.9f);
+                            break;
+                        case UpgradeType.SpecialAbility:
+                            _pistol.UpgradeSpecialAbility();
+                            break;
+                    }
+
+                    break;
+                case WeaponType.GrenadeLauncher: 
+                    switch (upgrade)
+                    {
+                        case UpgradeType.Damage:
+                            _launcher.UpgradeDamage(1);
+                            break;
+                        case UpgradeType.ReloadSpeed:
+                            _launcher.UpgradeReloadSpeed(0.9f);
+                            break;
+                        case UpgradeType.SpecialAbility:
+                            _launcher.UpgradeSpecialAbility();
+                            break;
+                    }
+
+                    break;
+            }
+        }
+
+        public void UpgradeWeaponRandomAttribute(WeaponType weapon)
+        {
+            var randomIndex = UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(UpgradeType)).Length);
+            UpgradeType upgrade = (UpgradeType)randomIndex;
+            UpgradeWeapon(weapon, upgrade);
         }
 
         private void Start()
@@ -121,15 +160,15 @@ namespace Player.Weapons
 
         public void SwitchWeapon()
         {
-            var new_w_int = ((int)selectedWeapon + 1) % System.Enum.GetValues(typeof(WeaponType)).Length;
-            var new_w = (WeaponType)new_w_int;
-            if (!HasUnlockedWeapon(new_w))
+            var newWINT = ((int)selectedWeapon + 1) % System.Enum.GetValues(typeof(WeaponType)).Length;
+            var newW = (WeaponType)newWINT;
+            if (!HasUnlockedWeapon(newW))
             {
                 return;
             }
 
             _currentWeapon.SetActive(false);
-            selectedWeapon = new_w;
+            selectedWeapon = newW;
             SetWeaponInHand(selectedWeapon);
         }
 

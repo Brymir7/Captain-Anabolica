@@ -30,14 +30,17 @@ namespace Enemies
         [SerializeField] private List<EnemySpawnInfo> enemySpawnInfos;
         [SerializeField] private float baseSpawnInterval;
         [SerializeField] private int baseMaxEnemies;
-        [SerializeField] private Transform plane;
         private float _nextSpawnTime;
         [SerializeField] private GameObject xpOrbPrefab;
-        private float _difficultyModifier = 1f;
+        [FormerlySerializedAs("_difficultyModifier")] [SerializeField] private float difficultyModifier = 1f;
+
+        [FormerlySerializedAs("OneDeltaDifficultyPerXSeconds")] [SerializeField]
+        private int oneDeltaDifficultyPerXSeconds;
+
         private List<Enemy> _activeEnemies = new List<Enemy>();
         private readonly List<Transform> _enemyTransforms = new List<Transform>();
         private readonly List<GameObject> _activeEnemyObjects = new List<GameObject>();
-        private Queue<WeaponSpawnInfo> weaponSpawnQueue = new Queue<WeaponSpawnInfo>();
+        private Queue<WeaponSpawnInfo> _weaponSpawnQueue = new Queue<WeaponSpawnInfo>();
 
         public List<Transform> GetTransforms()
         {
@@ -46,20 +49,20 @@ namespace Enemies
 
         public void SpawnWeapon(WeaponSpawnInfo obj)
         {
-            weaponSpawnQueue.Enqueue(obj);
+            _weaponSpawnQueue.Enqueue(obj);
         }
 
         private void Update()
         {
-            float currentSpawnInterval = baseSpawnInterval / _difficultyModifier;
-            float currentMaxEnemies = baseMaxEnemies * _difficultyModifier;
-            if (Time.time >= _nextSpawnTime && _activeEnemies.Count < baseMaxEnemies)
+            float currentSpawnInterval = baseSpawnInterval / difficultyModifier;
+            float currentMaxEnemies = baseMaxEnemies * difficultyModifier;
+            if (Time.time >= _nextSpawnTime && _activeEnemies.Count < currentMaxEnemies)
             {
                 SpawnEnemy();
                 _nextSpawnTime = Time.time + currentSpawnInterval;
             }
 
-            _difficultyModifier += Time.deltaTime / 60;
+            difficultyModifier += Time.deltaTime / oneDeltaDifficultyPerXSeconds;
         }
 
         private void HandleEnemyDeath(Enemy enemy)
@@ -70,12 +73,12 @@ namespace Enemies
                 var xpOrb = Instantiate(xpOrbPrefab, enemy.GetFirstGroundBelow(), Quaternion.identity);
                 var xpOrbScript = xpOrb.GetComponent<XpOrb>();
                 xpOrbScript.xpAmount = 20; // TODO
-                if (weaponSpawnQueue.Count > 0)
+                if (_weaponSpawnQueue.Count > 0)
                 {
-                    var weapon = weaponSpawnQueue.Dequeue();
+                    var weapon = _weaponSpawnQueue.Dequeue();
 
                     Instantiate(weapon.prefab,
-                        weapon.SpawnPosition.HasValue ? weapon.SpawnPosition.Value : enemy.GetFirstGroundBelow(),
+                        weapon.SpawnPosition.HasValue ? weapon.SpawnPosition.Value : enemy.GetFirstGroundBelow() + weapon.prefab.transform.localScale,
                         Quaternion.identity);
                 }
 
