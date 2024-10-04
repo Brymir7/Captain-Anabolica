@@ -62,6 +62,8 @@ namespace Player.Weapons
                     LauncherBullet childBullet = newBullet.GetComponent<LauncherBullet>();
                     childBullet.recursiveChildren = recursiveChildren - 1;
                     childBullet.speed = speed * childrenRelativeSpeed;
+                    childBullet.amountOfChildrenPerRecursion = amountOfChildrenPerRecursion;
+                    childBullet.damage = damage;
                     Destroy(newBullet, 5f);
                 }
             }

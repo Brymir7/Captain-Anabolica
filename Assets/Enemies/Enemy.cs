@@ -16,7 +16,7 @@ namespace Enemies
         protected float MoveSpeed;
         protected Vector3 Velocity;
         protected Transform Player;
-
+        protected int Damage;
         [SerializeField] protected GameObject onHitVFX;
         [SerializeField] protected GameObject onDeathVFX;
 
@@ -25,6 +25,7 @@ namespace Enemies
             EnemyType = type;
             Health = 1;
             MoveSpeed = 0.05f;
+            Damage = 1;
             Velocity = Vector3.zero;
             Player = GameObject.FindGameObjectWithTag("Player").transform;
         }
@@ -32,6 +33,21 @@ namespace Enemies
         public void SetHealth(int newHealth)
         {
             this.Health = newHealth;
+        }
+
+        public void SetDamage(int newDamage)
+        {
+            this.Damage = newDamage;
+        }
+
+        public int GetDamage()
+        {
+            return this.Damage;
+        }
+
+        public EnemyType GetTypeEnemy()
+        {
+            return EnemyType;
         }
 
         public void SetMoveSpeed(float newMoveSpeed)

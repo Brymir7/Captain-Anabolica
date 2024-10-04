@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enemies;
 using Player;
 using Player.Weapons;
 using UnityEngine;
@@ -61,6 +62,19 @@ public class PlayerStateSummary : MonoBehaviour
             {
                 weaponHandling.UnlockWeapon(status.weaponType);
             }
+        }
+    }
+
+    public void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            if (!other.TryGetComponent<Enemy>(out var enemy))
+            {
+                enemy = other.GetComponentInParent<Enemy>();
+            }
+
+            health -= enemy.GetDamage();
         }
     }
 }

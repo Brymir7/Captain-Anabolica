@@ -18,6 +18,7 @@ namespace Enemies
             public float spawnWeight = 1f;
             public float minSpawnDistance = 10f;
             public float maxSpawnDistance = 20f;
+            public float minDifficultyModifierToSpawn = 1f;
         }
 
         [System.Serializable]
@@ -32,7 +33,9 @@ namespace Enemies
         [SerializeField] private int baseMaxEnemies;
         private float _nextSpawnTime;
         [SerializeField] private GameObject xpOrbPrefab;
-        [FormerlySerializedAs("_difficultyModifier")] [SerializeField] private float difficultyModifier = 1f;
+
+        [FormerlySerializedAs("_difficultyModifier")] [SerializeField]
+        private float difficultyModifier = 1f;
 
         [FormerlySerializedAs("OneDeltaDifficultyPerXSeconds")] [SerializeField]
         private int oneDeltaDifficultyPerXSeconds;
@@ -72,13 +75,15 @@ namespace Enemies
             {
                 var xpOrb = Instantiate(xpOrbPrefab, enemy.GetFirstGroundBelow(), Quaternion.identity);
                 var xpOrbScript = xpOrb.GetComponent<XpOrb>();
-                xpOrbScript.xpAmount = 20; // TODO
+                xpOrbScript.xpAmount = GetRandomXpValue(enemy.GetTypeEnemy()); // TODO
                 if (_weaponSpawnQueue.Count > 0)
                 {
                     var weapon = _weaponSpawnQueue.Dequeue();
 
                     Instantiate(weapon.prefab,
-                        weapon.SpawnPosition.HasValue ? weapon.SpawnPosition.Value : enemy.GetFirstGroundBelow() + weapon.prefab.transform.localScale,
+                        weapon.SpawnPosition.HasValue
+                            ? weapon.SpawnPosition.Value
+                            : enemy.GetFirstGroundBelow() + weapon.prefab.transform.localScale,
                         Quaternion.identity);
                 }
 
@@ -92,6 +97,11 @@ namespace Enemies
         private void SpawnEnemy()
         {
             EnemySpawnInfo spawnInfo = GetRandomEnemySpawnInfo();
+            while (spawnInfo.minDifficultyModifierToSpawn > difficultyModifier)
+            {
+                spawnInfo = GetRandomEnemySpawnInfo();
+            }
+
             Vector3 spawnPosition = GetRandomSpawnPosition(spawnInfo);
 
             GameObject enemyObject = Instantiate(spawnInfo.enemyPrefab, spawnPosition, Quaternion.identity);

@@ -840,23 +840,26 @@ MonoBehaviour:
   enemySpawnInfos:
   - enemyType: 2
     enemyPrefab: {fileID: 7322521181242813736, guid: 1bef93028ea879846b5d8ce9dbe0b3b8, type: 3}
-    spawnWeight: 1
+    spawnWeight: 5
     minSpawnDistance: 30
     maxSpawnDistance: 55
+    minDifficultyModifierToSpawn: 1
   - enemyType: 1
     enemyPrefab: {fileID: 8753434687860246814, guid: 1a2828f6271f5ac46aa46defa2d1afb2, type: 3}
     spawnWeight: 1
     minSpawnDistance: 15
     maxSpawnDistance: 15
+    minDifficultyModifierToSpawn: 500
   - enemyType: 0
     enemyPrefab: {fileID: 557161061857013364, guid: e1990e8f1de36bc42a889045006a8e93, type: 3}
-    spawnWeight: 1
+    spawnWeight: 3
     minSpawnDistance: 25
     maxSpawnDistance: 30
+    minDifficultyModifierToSpawn: 100
   baseSpawnInterval: 2
   baseMaxEnemies: 2
   xpOrbPrefab: {fileID: 5996322711401029766, guid: a6a2c473fc208124da663bb0945230b3, type: 3}
-  _difficultyModifier: 1
+  difficultyModifier: 1
   oneDeltaDifficultyPerXSeconds: 2
 --- !u!1 &1275796871
 GameObject:
@@ -890,7 +893,7 @@ MonoBehaviour:
   weaponPrefabs:
   - {fileID: 8607724715112365412, guid: dfd801b554ca02b44b32f70642c8ef2f, type: 3}
   - {fileID: 6832456614612681042, guid: 50e76acf7bd8efa469f58e7acf3dd13a, type: 3}
-  _enemyManager: {fileID: 1119835033}
+  enemyManager: {fileID: 1119835033}
 --- !u!4 &1275796873
 Transform:
   m_ObjectHideFlags: 0
@@ -1267,7 +1270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2262892891029279230, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3
+      value: 3.271
       objectReference: {fileID: 0}
     - target: {fileID: 2262892891029279230, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1301,17 +1304,21 @@ PrefabInstance:
       propertyPath: anyPickupsLayerMask.m_Bits
       value: 256
       objectReference: {fileID: 0}
-    - target: {fileID: 5078635378990148266, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
-      propertyPath: offset.y
-      value: 2
+    - target: {fileID: 4471118471720700887, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5078635378990148266, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
-      propertyPath: offset.z
-      value: -2.5
+    - target: {fileID: 4471118471720700887, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
+      propertyPath: m_Center.y
+      value: -0.3
       objectReference: {fileID: 0}
-    - target: {fileID: 5078635378990148266, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
-      propertyPath: rotationLimits.y
-      value: 60
+    - target: {fileID: 4471118471720700887, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6854391393675309719, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8800171079460119276, guid: 1f8d5763cc9103c4496f0ccd5aebbc21, type: 3}
       propertyPath: m_Name
