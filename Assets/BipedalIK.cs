@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class BipedalIK : MonoBehaviour
@@ -15,6 +16,10 @@ public class BipedalIK : MonoBehaviour
     private float _rightLegAnimationTime;
     [SerializeField] private float stepDistance;
     [SerializeField] private float animationTime = 0.5f;
+
+    public delegate void OnLegHitGroundCallback();
+
+    [CanBeNull] private OnLegHitGroundCallback _onLegHitGroundCallback;
 
     void Start()
     {
@@ -46,6 +51,11 @@ public class BipedalIK : MonoBehaviour
         }
     }
 
+    public void SetOnLegHitGroundCallback(OnLegHitGroundCallback onLegHitGroundCallback)
+    {
+        _onLegHitGroundCallback = onLegHitGroundCallback;
+    }
+
     public void AnimateLegs()
     {
         if (_velocity == Vector3.zero)
@@ -69,7 +79,7 @@ public class BipedalIK : MonoBehaviour
         // if legs got stuck || are in the same loop due to physics || initial position, then only move left leg
         var sameLoop = Vector3.Distance(_rightLegIK.joints[_rightLegIK.joints.Count - 1].position,
             _leftLegIK.joints[_leftLegIK.joints.Count - 1].position) < epsilonForSameLoop;
-        if (!sameLoop && forwardDistanceRightFeetToLeftTarget > stepDistance  &&
+        if (!sameLoop && forwardDistanceRightFeetToLeftTarget > stepDistance &&
             Vector3.Distance(nextLegRightPos, _nextRightLegTarget) > stepDistance * 2.0f)
         {
             _nextRightLegTarget = nextLegRightPos;
@@ -80,6 +90,13 @@ public class BipedalIK : MonoBehaviour
             Vector3.Lerp(_leftLegIK.target, _nextLeftLegTarget, _leftLegAnimationTime / animationTime);
         _rightLegIK.target =
             Vector3.Lerp(_rightLegIK.target, _nextRightLegTarget, _rightLegAnimationTime / animationTime);
+
+        if (_leftLegAnimationTime + Time.deltaTime > animationTime ||
+            _rightLegAnimationTime + Time.deltaTime > animationTime)
+        {
+            _onLegHitGroundCallback?.Invoke();
+        }
+
         _leftLegAnimationTime += Time.deltaTime;
         _rightLegAnimationTime += Time.deltaTime;
     }

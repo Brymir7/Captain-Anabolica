@@ -129,6 +129,9 @@ namespace Enemies
                     skeleton.SetMoveSpeed(0.06f);
                     skeleton.SetHealth(3);
                     break;
+                case EnemyType.Golem:
+                    var golem = enemyComponent.GetComponent<GolemEnemy>();
+                    break;
             }
 
             enemyComponent.transform.parent = transform;
@@ -177,6 +180,9 @@ namespace Enemies
                     break;
                 case EnemyType.Spider:
                     spawnPosition.y = 2f;
+                    break;
+                case EnemyType.Golem:
+                    spawnPosition.y = 3.7f;
                     break;
             }
 

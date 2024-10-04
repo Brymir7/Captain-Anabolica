@@ -40,23 +40,23 @@ namespace Enemies
             }
         }
 
-        protected Vector3 perpendicularMovement;
+        protected Vector3 PerpendicularMovement;
         [SerializeField] protected float changeSnakeMovementDirEveryXSeconds;
-        protected float currentTime;
+        protected float CurrentTime;
 
         public override void Move()
         {
-            currentTime += Time.deltaTime;
-            if (currentTime >= changeSnakeMovementDirEveryXSeconds)
+            CurrentTime += Time.deltaTime;
+            if (CurrentTime >= changeSnakeMovementDirEveryXSeconds)
             {
-                currentTime = 0.0f;
+                CurrentTime = 0.0f;
                 Vector3 perpendicular = Vector3.Cross(Velocity, Vector3.up).normalized;
                 float randomOffset = Random.Range(-1f, 1f);
                 Vector3 lateralOffset = perpendicular * (randomOffset);
-                perpendicularMovement = lateralOffset;
+                PerpendicularMovement = lateralOffset;
             }
 
-            _ik.target += (Velocity + perpendicularMovement) * MoveSpeed;
+            _ik.target += (Velocity + PerpendicularMovement) * MoveSpeed;
             _ik.target.y =
                 Mathf.Max(
                     (GetFirstGroundBelow() + 0.1f *

@@ -8,10 +8,14 @@ namespace Player
     {
         public Transform player;
         private float _mouseSensitivity = 100f;
-        [FormerlySerializedAs("_rotationLimits")] public Vector2 rotationLimits = new Vector2(-90f, 60f);
+
+        [FormerlySerializedAs("_rotationLimits")]
+        public Vector2 rotationLimits = new Vector2(-90f, 60f);
+
         private float _verticalRotation = 0f;
         private float _horizontalRotation = 0f;
         public Vector3 offset = new Vector3(2, 0f, -1.5f);
+        [SerializeField] CameraShake _cameraShake;
 
         void Start()
         {
@@ -39,10 +43,12 @@ namespace Player
             {
                 verticalOffset = Mathf.Lerp(0f, -2f - offset.y, _verticalRotation / rotationLimits.x);
             }
-            float distanceModifier = Mathf.Lerp(1f, 0f, MathF.Abs( _verticalRotation) / rotationLimits.y);
+
+            float distanceModifier = Mathf.Lerp(1f, 0f, MathF.Abs(_verticalRotation) / rotationLimits.y);
             Vector3 adjustedOffset = new Vector3(offset.x, verticalOffset + offset.y, offset.z * distanceModifier);
 
-            transform.position = player.position + player.transform.rotation * adjustedOffset;
+            transform.position = player.position + player.transform.rotation * adjustedOffset +
+                                 _cameraShake.GetShakeOffset();
             transform.LookAt(player.position);
             transform.localRotation = Quaternion.Euler(_verticalRotation, 0f, 0f);
         }

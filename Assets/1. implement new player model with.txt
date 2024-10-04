@@ -33,18 +33,32 @@ how to make it look good?
 
 // respect forward momentum in grenade launcher spawning of children
 
-implement levelling system, pick up grenade launcher
-implement weapon pick up and upgrade system
+// implement levelling system, pick up grenade launcher 
 
-implement health bars for enemies, player
+/ semi done / implement weapon pick up and upgrade system
+
+/ semi done / implement health bars for enemies, player
+
+
+- start making a golem with animation
+- implement spider special ability
+- implement skeleton special ability
+- implement pistol special ability
+- implement worm going underground maybe?
 
 if enemy hits player, move object right into the players face like a jump scare
 implement actual special things about spider, skeleton -> skeleton falls apart but will still move, spider can have short sprints?
+-> every enemy has something special, implemented in their derived class, spider has bursts, skeleton will fall apart and throw bones?, golem will fall apart into own moving pieces,
+ ghosts are flying, add birds like in procedural animation vid (they drop eggs that deal dmg and hover around player) ?
+ 
+-> pistol for flying, special move maybe some quicker reload for short period that can be activated, duration increases
+-> grenade luancher for basic area clear ground only
+-> 
 
 implement horse make it abstract will be reused a lot, implement mob combination -> skeelton on horse, skeleton on spider (will inherit the behavior of the spider, use better composition for for this)
 implement goblin (heavy hitter), implement zombie (will be invulnerable then respawn once)
 implement bipedal mob which just jumps -> goblin?
-add ghosts
+add ghosts, add golem that falls apart and in the end is only a rolling cube
 
 make hydra, make medusa, make big worm (first enemy), these will have actual attack patterns that u have to dodge, add dodge as baseline mobility
 ^-make them bosses-^

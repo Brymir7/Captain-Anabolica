@@ -5,5 +5,6 @@
         Skeleton,
         Worm,
         Spider,
+        Golem,
     }
 }

@@ -160,8 +160,8 @@ namespace Player.Weapons
 
         public void SwitchWeapon()
         {
-            var newWINT = ((int)selectedWeapon + 1) % System.Enum.GetValues(typeof(WeaponType)).Length;
-            var newW = (WeaponType)newWINT;
+            var newWint = ((int)selectedWeapon + 1) % System.Enum.GetValues(typeof(WeaponType)).Length;
+            var newW = (WeaponType)newWint;
             if (!HasUnlockedWeapon(newW))
             {
                 return;
