@@ -9,12 +9,28 @@ namespace Enemies
         private BipedalIK _bipedal;
         private CameraShake _cameraShake;
 
+        private float _shakeDelay;
+        private bool _shouldShake;
+
         public void Start()
         {
             _bipedal = GetComponent<BipedalIK>();
             if (Camera.main != null) _cameraShake = Camera.main.GetComponent<CameraShake>();
-            print("camera shake is not null" + (_cameraShake != null));
-            _bipedal.SetOnLegHitGroundCallback(() => { _cameraShake.Shake(0.5f, 0.5f, 0.1f); });
+            _bipedal.SetOnLegHitGroundCallback(HandleLegHitGround);
+        }
+
+        private void HandleLegHitGround()
+        {
+            _shouldShake = true; // Set the state to true to trigger the shake
+        }
+
+        private void Update()
+        {
+            if (_shouldShake)
+            {
+                _cameraShake.Shake(0.1f, 0.1f, 0.3f);
+                _shouldShake = false; // Reset the state after shaking
+            }
         }
 
         public override void Attack()

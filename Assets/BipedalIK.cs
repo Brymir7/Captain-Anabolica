@@ -63,40 +63,6 @@ public class BipedalIK : MonoBehaviour
             MoveLegsToResting();
             return;
         }
-
-        var nextLegLeftPos = GetNextFootPosition(_leftLegIK);
-        if (
-            Vector3.Distance(nextLegLeftPos, _nextLeftLegTarget) > stepDistance * 2.0)
-        {
-            _nextLeftLegTarget = nextLegLeftPos;
-            _leftLegAnimationTime = 0.0f;
-        }
-
-        var nextLegRightPos = GetNextFootPosition(_rightLegIK);
-        // only move right feet if right is behind and left is in front by at least a step distance
-        var forwardDistanceRightFeetToLeftTarget =
-            Vector3.Dot(transform.forward, (nextLegRightPos - _leftLegIK.target));
-        // if legs got stuck || are in the same loop due to physics || initial position, then only move left leg
-        var sameLoop = Vector3.Distance(_rightLegIK.joints[_rightLegIK.joints.Count - 1].position,
-            _leftLegIK.joints[_leftLegIK.joints.Count - 1].position) < epsilonForSameLoop;
-        if (!sameLoop && forwardDistanceRightFeetToLeftTarget > stepDistance &&
-            Vector3.Distance(nextLegRightPos, _nextRightLegTarget) > stepDistance * 2.0f)
-        {
-            _nextRightLegTarget = nextLegRightPos;
-            _rightLegAnimationTime = 0.0f;
-        }
-
-        _leftLegIK.target =
-            Vector3.Lerp(_leftLegIK.target, _nextLeftLegTarget, _leftLegAnimationTime / animationTime);
-        _rightLegIK.target =
-            Vector3.Lerp(_rightLegIK.target, _nextRightLegTarget, _rightLegAnimationTime / animationTime);
-
-        if (_leftLegAnimationTime + Time.deltaTime > animationTime ||
-            _rightLegAnimationTime + Time.deltaTime > animationTime)
-        {
-            _onLegHitGroundCallback?.Invoke();
-        }
-
         _leftLegAnimationTime += Time.deltaTime;
         _rightLegAnimationTime += Time.deltaTime;
     }

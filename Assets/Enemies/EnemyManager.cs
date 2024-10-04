@@ -131,6 +131,7 @@ namespace Enemies
                     break;
                 case EnemyType.Golem:
                     var golem = enemyComponent.GetComponent<GolemEnemy>();
+                    golem.SetMoveSpeed(0.03f);
                     break;
             }
 
