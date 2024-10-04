@@ -52,6 +52,7 @@ MonoBehaviour:
   amountOfSegments: 12
   jointPrefab: {fileID: 7662906744246652632, guid: fe0637d229050b64c80fb0ea1b3f2bee, type: 3}
   connectorPrefab: {fileID: 7586978389177234526, guid: 0c891e7f51aafd14ba79bfd5e29458e8, type: 3}
+  changeSnakeMovementDirEveryXSeconds: 3
 --- !u!54 &8263145956352919437
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -71,7 +72,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1

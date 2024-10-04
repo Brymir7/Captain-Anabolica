@@ -26,10 +26,7 @@ namespace Enemies
         protected override void OnDirectionUpdate(Vector3 newDirection)
         {
             Velocity = (Player.transform.position - _ik.target).normalized;
-            //  Vector3 perpendicular = Vector3.Cross(Velocity, Vector3.up).normalized;
-            //  float randomOffset = Random.Range(-1f, 1f);
-            //  Vector3 lateralOffset = perpendicular * (randomOffset);
-            //  Velocity += lateralOffset;
+
 
             Velocity.y = 0;
             var distTailToPlayer = Vector3.Distance(Player.transform.position, _ik.joints[0].position);
@@ -43,9 +40,23 @@ namespace Enemies
             }
         }
 
+        protected Vector3 perpendicularMovement;
+        [SerializeField] protected float changeSnakeMovementDirEveryXSeconds;
+        protected float currentTime;
+
         public override void Move()
         {
-            _ik.target += Velocity * MoveSpeed;
+            currentTime += Time.deltaTime;
+            if (currentTime >= changeSnakeMovementDirEveryXSeconds)
+            {
+                currentTime = 0.0f;
+                Vector3 perpendicular = Vector3.Cross(Velocity, Vector3.up).normalized;
+                float randomOffset = Random.Range(-1f, 1f);
+                Vector3 lateralOffset = perpendicular * (randomOffset);
+                perpendicularMovement = lateralOffset;
+            }
+
+            _ik.target += (Velocity + perpendicularMovement) * MoveSpeed;
             _ik.target.y =
                 Mathf.Max(
                     (GetFirstGroundBelow() + 0.1f *
