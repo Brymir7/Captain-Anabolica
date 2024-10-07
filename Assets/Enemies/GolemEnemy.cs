@@ -42,5 +42,10 @@ namespace Enemies
             transform.position += Velocity;
             _bipedal.SetVelocity(Velocity);
         }
+
+        protected override void OnDirectionUpdate(Vector3 newDirection)
+        {
+            transform.rotation = transform.rotation * Quaternion.Euler(Mathf.Lerp(0f, 30f, 1.0f), 0, 0) ;
+        }
     }
 }

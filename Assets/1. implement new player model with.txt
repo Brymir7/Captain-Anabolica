@@ -46,10 +46,14 @@ how to make it look good?
 - implement pistol special ability
 - implement worm going underground maybe?
 
+make enemies accelerate, tilt them forward, if shot remove velocity let them accelerate agian
+
 if enemy hits player, move object right into the players face like a jump scare
 implement actual special things about spider, skeleton -> skeleton falls apart but will still move, spider can have short sprints?
+
 -> every enemy has something special, implemented in their derived class, spider has bursts, skeleton will fall apart and throw bones?, golem will fall apart into own moving pieces,
  ghosts are flying, add birds like in procedural animation vid (they drop eggs that deal dmg and hover around player) ?
+
  
 -> pistol for flying, special move maybe some quicker reload for short period that can be activated, duration increases
 -> grenade luancher for basic area clear ground only

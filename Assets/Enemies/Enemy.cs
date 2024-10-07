@@ -17,6 +17,8 @@ namespace Enemies
         protected Vector3 Velocity;
         protected Transform Player;
         protected int Damage;
+        protected Vector3 MaxVelocity;
+        protected Vector3 acceleration;
         [SerializeField] protected GameObject onHitVFX;
         [SerializeField] protected GameObject onDeathVFX;
 
@@ -58,10 +60,6 @@ namespace Enemies
         public virtual void Move()
         {
             transform.position += Velocity;
-        }
-
-        public virtual void SetVelToPlayerDir()
-        {
         }
 
         public virtual void SetForwardVecToPlayer()

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -6,7 +7,6 @@ public class BipedalIK : MonoBehaviour
     public GameObject leftLeg;
     public GameObject rightLeg;
     public bool animateLegs;
-    public float epsilonForSameLoop = 0.1f;
     private IK _leftLegIK;
     private IK _rightLegIK;
     private Vector3 _velocity = Vector3.zero;
@@ -16,6 +16,8 @@ public class BipedalIK : MonoBehaviour
     private float _rightLegAnimationTime;
     [SerializeField] private float stepDistance;
     [SerializeField] private float animationTime = 0.5f;
+    [SerializeField] private List<Transform> feetKeyFramesWalking;
+    [SerializeField] private List<Transform> feetKeyFramesRunning;
 
     public delegate void OnLegHitGroundCallback();
 
@@ -63,25 +65,25 @@ public class BipedalIK : MonoBehaviour
             MoveLegsToResting();
             return;
         }
-        _leftLegAnimationTime += Time.deltaTime;
-        _rightLegAnimationTime += Time.deltaTime;
+
+        _leftLegAnimationTime = (_leftLegAnimationTime + Time.deltaTime) % animationTime;
+        _rightLegAnimationTime = (_rightLegAnimationTime + Time.deltaTime) % animationTime;
+        _leftLegIK.target = CalculateFootTarget(_leftLegIK, _leftLegAnimationTime, 1);
+        _rightLegIK.target = CalculateFootTarget(_rightLegIK, _rightLegAnimationTime, -1);
     }
 
-    Vector3 GetNextFootPosition(IK legIK)
+    private Vector3 CalculateFootTarget(IK legIK, float currAnimT, float dir)
     {
-        Vector3 forward = transform.forward * stepDistance;
-        Vector3 stepPosition = legIK.joints[0].position + forward; // from hip forward
+        Vector3 footPosition = legIK.joints[0].position + transform.up * (-1 * legIK.totalBoneLength);
+        float stepProgress = Mathf.Sin(currAnimT / animationTime) * stepDistance;
 
-        if (Physics.Raycast(stepPosition + Vector3.up, Vector3.down, out RaycastHit hit))
-        {
-            if (hit.transform.gameObject.CompareTag("Ground"))
-            {
-                stepPosition = hit.point;
-                return stepPosition;
-            }
-        }
+        Vector3 target = stepProgress * dir * transform.forward + footPosition;
+        // if (Physics.Raycast(target + Vector3.up, Vector3.down, out RaycastHit hit))
+        // {
+        //     target = hit.point;
+        // }
 
-        return legIK.joints[legIK.joints.Count - 1].position + forward;
+        return target;
     }
 
     Vector3 GetRestingFootPosition(IK legIK)
