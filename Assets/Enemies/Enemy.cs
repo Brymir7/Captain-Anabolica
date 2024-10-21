@@ -70,8 +70,6 @@ namespace Enemies
             Velocity = transform.forward * MoveSpeed;
         }
 
-        public abstract void Attack();
-
         public virtual void TakeDamage(int damage)
         {
             Health -= damage;

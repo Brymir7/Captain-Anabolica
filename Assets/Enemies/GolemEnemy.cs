@@ -21,20 +21,7 @@ namespace Enemies
 
         private void HandleLegHitGround()
         {
-            _shouldShake = true; // Set the state to true to trigger the shake
-        }
-
-        private void Update()
-        {
-            if (_shouldShake)
-            {
-                _cameraShake.Shake(0.1f, 0.1f, 0.3f);
-                _shouldShake = false; // Reset the state after shaking
-            }
-        }
-
-        public override void Attack()
-        {
+            _cameraShake.Shake(0.1f, 0.1f, 0.3f);
         }
 
         public override void Move()

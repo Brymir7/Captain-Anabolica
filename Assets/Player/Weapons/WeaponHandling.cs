@@ -33,23 +33,6 @@ namespace Player.Weapons
         private Dictionary<WeaponType, GameObject> _weaponInstances = new Dictionary<WeaponType, GameObject>();
         private GameObject _currentWeapon;
 
-        public void FillWeaponCooldowns(float[] cooldowns)
-        {
-            for (int i = 0; i < weaponsPrefabs.Count; i++)
-            {
-                WeaponType weaponType = (WeaponType)i;
-
-                if (HasUnlockedWeapon(weaponType) == false)
-                {
-                    cooldowns[i] = -1f;
-                    continue;
-                }
-
-                var weapon = _weaponInstances[weaponType].GetComponent<WeaponBase>();
-                cooldowns[i] = weapon.GetTimeTillNextShot();
-            }
-        }
-
         public bool HasUnlockedWeapon(WeaponType weapon)
         {
             return (_hasUnlockedWeapons & (1 << (int)weapon)) > 0;

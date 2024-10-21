@@ -43,15 +43,10 @@ public class PlayerStateSummary : MonoBehaviour
         return _weaponCooldowns;
     }
 
-    void Start()
+    private void Awake()
     {
         _maxHealth = health;
         InitializeWeaponUnlockStatuses();
-    }
-
-    void Update()
-    {
-        weaponHandling.FillWeaponCooldowns(_weaponCooldowns);
     }
 
     private void InitializeWeaponUnlockStatuses()

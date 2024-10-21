@@ -11,9 +11,7 @@ namespace Enemies
             _bipedal = GetComponent<BipedalIK>();
         }
 
-        public override void Attack()
-        {
-        }
+
 
         public override void Move()
         {

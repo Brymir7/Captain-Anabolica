@@ -3,9 +3,6 @@ namespace Enemies
 {
     public class SpiderEnemy : Enemy
     {
-        public override void Attack()
-        {
-        }
 
         protected override void OnDirectionUpdate(Vector3 newDirection)
         {

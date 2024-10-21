@@ -3677,7 +3677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ac85540ba6f0b24fac50363b88753fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistanceOfLegTillSnapback: 0.4
+  maxDistanceOfLegTillSnapback: 0.6
   legIKPairs:
   - leg: {fileID: 6161556878723095827}
     offsetFromBody: {x: 0.1, y: 0, z: 0.2}

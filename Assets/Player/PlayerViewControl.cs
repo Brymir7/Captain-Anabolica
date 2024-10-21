@@ -28,7 +28,7 @@ namespace Player
             float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity * Time.deltaTime;
 
             _horizontalRotation += mouseX;
-            player.Rotate(Vector3.up * mouseX); // Rotates the player horizontally
+            player.Rotate(Vector3.up * mouseX);
 
             _verticalRotation -= mouseY;
             _verticalRotation = Mathf.Clamp(_verticalRotation, rotationLimits.x, rotationLimits.y);

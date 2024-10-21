@@ -15,9 +15,7 @@ namespace Enemies
         private bool _reversedDirection = false;
         private IK _ik;
 
-        public override void Attack()
-        {
-        }
+
 
         public override void SetForwardVecToPlayer()
         {

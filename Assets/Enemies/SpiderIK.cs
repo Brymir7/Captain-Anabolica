@@ -15,7 +15,7 @@ namespace Enemies
 
     public class SpiderIK : MonoBehaviour
     {
-        public float maxDistanceOfLegTillSnapback = 0.2f;
+        public float maxDistanceOfLegTillSnapback;
         [SerializeField] private List<LegIKPair> legIKPairs;
 
         void Start()
