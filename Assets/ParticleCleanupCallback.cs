@@ -22,10 +22,6 @@ public class ParticleCleanup : MonoBehaviour
         }
         if (allParticlesFinished)
         {
-            foreach (var ps in _childParticleSystems)
-            {
-                Destroy(ps.gameObject);
-            }
             Destroy(gameObject);
         }
     }
